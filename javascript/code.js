@@ -6,6 +6,9 @@
 function muu() {
     alert("muu muu");
 }
+function americancow() {
+    alert("Moo. Freedom.");
+}
 function nof() {
     alert("nöf nöf");
 }
