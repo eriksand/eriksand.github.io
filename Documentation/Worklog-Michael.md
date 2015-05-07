@@ -6,7 +6,7 @@
 
 * Created index.html, style.css, and worklog.md
 
-* Restructured repo (Documentation and src)
+* Restructured repo (Documentation)
 
 * Created issue and milestones
 
