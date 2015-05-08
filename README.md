@@ -74,3 +74,19 @@ CaDeID is an attempt at synergizing the idle/incremental and defense genres of w
 * <html><a href="http://www.codecademy.com/en/tracks/javascript">Codecademy</a></html>
 
 * <html><a href="https://www.khanacademy.org/computing/computer-programming/programming">Khan Academy (beginner)</a></html> (Kind of a tangent, if you feel like learning JS libraries and fringe animations this may be good. Do the others first.)
+
+**Quick and dirty Github for Windows tutorial**
+
+* If you don't see any repositories, clone the repo
+
+* Sync the repo
+
+* Create a new branch with a descriptive name
+
+* Make changes locally, commit often and describe your changes
+
+* Push (publish) your changes
+
+* Create a pull request at [github.com/micaminoff/micaminoff.github.io](http://www.github.com/micaminoff/micaminoff.github.io)
+
+* PLEASE wait for me to merge it if it's something important. If it's something trivial like a typo or markdown improvements - go ahead.
