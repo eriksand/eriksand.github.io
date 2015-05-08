@@ -37,6 +37,8 @@ CaDeID is an attempt at synergizing the idle/incremental and defense genres of w
 
 *Recommended order - HTMLDog HTML -> CSS -> JS -> Atlassian git -> try.github.io -> Codewars*
 
+* <html><a href="https://help.github.com/articles/markdown-basics/">Markdown</a></html>
+
 **GIT(hub)**
 
 * <html><a href="https://www.atlassian.com/git/tutorials/">Atlassian (git)</a></html>
