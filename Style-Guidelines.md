@@ -26,7 +26,7 @@ Name functions, variables, classes, and IDs descriptively. Use camelCase for nam
 
 #####JavaScript
 ```
-var someFunction() {
+var someFunction = function() {
     for (var i = 0; i < 5; i++) {
         console.log(i);
     }
