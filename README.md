@@ -39,6 +39,8 @@ CaDeID is an attempt at synergizing the idle/incremental and defense genres of w
 
 * <html><a href="https://help.github.com/articles/markdown-basics/">Markdown</a></html>
 
+* [Markdown beginners tutorial](http://markdowntutorial.com/)
+
 **GIT(hub)**
 
 * <html><a href="https://www.atlassian.com/git/tutorials/">Atlassian (git)</a></html>
