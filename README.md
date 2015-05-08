@@ -77,7 +77,7 @@ CaDeID is an attempt at synergizing the idle/incremental and defense genres of w
 
 * <html><a href="https://www.khanacademy.org/computing/computer-programming/programming">Khan Academy (beginner)</a></html> (Kind of a tangent, if you feel like learning JS libraries and fringe animations this may be good. Do the others first.)
 
-**Quick and dirty Github for Windows tutorial**
+### Quick and dirty Github for Windows tutorial
 
 * If you don't see any repositories, clone the repo
 
