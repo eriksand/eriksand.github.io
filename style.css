@@ -2,3 +2,21 @@ body {
     color: #888888;
     font-family: Helvetica, sans-serif;
 }
+
+#container {
+    background-color: black;
+    width: 500px;
+    height: 250px;
+    line-height: 250px;
+}
+#container p {
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: bold;
+}
+
+footer {
+    clear: both;
+    float: left;
+    position: fixed;
+}
