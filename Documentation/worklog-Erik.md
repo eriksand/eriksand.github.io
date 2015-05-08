@@ -7,3 +7,4 @@
 **8.5.2015** 
 *  New day, reformatted this worklog so it should be in markdown
 *  Created an issue about the formatting about this document and added some spacing to make it looka nice :)
+*  Seems to be working, thanks Michael
