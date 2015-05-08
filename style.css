@@ -5,9 +5,9 @@ body {
 
 #container {
     background-color: black;
-    width: 500px;
-    height: 250px;
-    line-height: 250px;
+    width: 1000px;
+    height: 550px;
+    line-height: 550px;
 }
 #container p {
     color: #FFFFFF;
