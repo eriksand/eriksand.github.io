@@ -32,7 +32,7 @@ CaDeID is an attempt at synergizing the idle/incremental and defense genres of w
   
   * <html><a href="https://mac.github.com/">Github for Mac </a><a href="https://mac.github.com/help.html">(tutorial)</a></html>
   
-*[Codepen.io](http://codepen.io/pen/) is a great tool for showing off your ideas about HTML/CSS/JS. Use it to give a concrete idea of your concept.
+* [Codepen.io](http://codepen.io/pen/) is a great tool for showing off your ideas about HTML/CSS/JS. Use it to give a concrete idea of your concept.
 
 ### Relevant tutorials and documentation
 *(in order of recommendation)*
