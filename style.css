@@ -3,16 +3,9 @@ body {
     font-family: Helvetica, sans-serif;
 }
 
-#container {
-    background-color: black;
+canvas {
     width: 1000px;
-    height: 550px;
-    line-height: 550px;
-}
-#container p {
-    color: #FFFFFF;
-    text-align: center;
-    font-weight: bold;
+    height: 500px;
 }
 
 footer {
