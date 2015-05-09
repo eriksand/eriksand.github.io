@@ -17,3 +17,5 @@
 * learned and exchanged with collaborators and project leader, got excited 
 
 * made my self to task to markdown the .readme file
+
+* starting tutorials
