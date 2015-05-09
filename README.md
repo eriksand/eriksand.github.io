@@ -92,3 +92,6 @@ CaDeID is an attempt at synergizing the idle/incremental and defense genres of w
 * Create a pull request at [github.com/micaminoff/micaminoff.github.io](http://www.github.com/micaminoff/micaminoff.github.io)
 
 * PLEASE wait for me to merge it if it's something important. If it's something trivial like a typo or markdown improvements - go ahead.
+
+
+*Art by Johanna Aminoff*
