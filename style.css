@@ -6,6 +6,8 @@ body {
 canvas {
     width: 1000px;
     height: 500px;
+    background-image: url("img/background_small.png");
+    background-repeat: no-repeat;
 }
 
 footer {
