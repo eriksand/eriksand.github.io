@@ -39,9 +39,12 @@ var game = { // a container for all relevant GAME information
     },
     
     init: function() {
-        game.canvas = document.querySelector("canvas");
-        game.canvas.context = game.canvas.getContext("2d");
-        game.gameLoop();
+        /*
+        Initialize the game
+        */
+        game.canvas = document.querySelector("canvas"); //assign canvas
+        game.canvas.context = game.canvas.getContext("2d"); //assign context
+        game.gameLoop(); //initialize gameLoop
         
     },
     
@@ -54,18 +57,21 @@ var game = { // a container for all relevant GAME information
 		game.draw(random); //call the canvas draw function
 	},
 	draw: function(random) { //this is where we will draw all the information for the game!
-        game.canvas.context.clearRect(0, 0, 500, 500);
-        if (typeof game.elements.enemies == null) {
-            game.elements.enemies = [];
+        game.canvas.context.clearRect(0, 0, 500, 500); //clear the canvas
+        if (typeof game.elements.enemies == null) { //check if array is initialized
+            game.elements.enemies = []; //if not, initialize
         }
-        if (random > 0.98) {
+        if (random > 0.98) { //chance of enemy spawning
             var helper = new game.Enemy(1, 10, 100, 1);
-            game.elements.enemies.push(helper);
+            game.elements.enemies.push(helper); //create and add new enemy to array
         }
         for (var i = 0; i < game.elements.enemies.length; i++) {
+            /*
+            This draws all enemies in the array
+            */
             var helper = game.elements.enemies[i];
             game.canvas.context.fillRect(helper.x, helper.y, 5, 5);
-            helper.x = helper.x + 0.5;
+            helper.x = helper.x + 0.5; //increment enemy x-position after loop
         }
 		game.gameLoop(); //re-iterate back to gameloop
 	},
@@ -77,7 +83,7 @@ var game = { // a container for all relevant GAME information
 };
 
 /*
-Helper
+Helper. I don't know why this works
 */
 window.requestAnimFrame = (function(){
 	return window.requestAnimationFrame || 
