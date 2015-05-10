@@ -1,6 +1,6 @@
 # Castle-Defense-Idle
 
-CaDeID is an attempt at synergizing the idle/incremental and defense genres of web games. It is primarily a coding and design excersize that I will work on over the summer.
+CaDeID is an attempt at synergizing the idle/incremental and defense genres of web games. It is primarily a coding and design exercise that I will work on over the summer.
 
 ### Inspirational links
 
