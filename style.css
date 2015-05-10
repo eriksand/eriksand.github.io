@@ -9,9 +9,3 @@ canvas {
     background-image: url("img/background_small.png");
     background-repeat: no-repeat;
 }
-
-footer {
-    clear: both;
-    float: left;
-    position: fixed;
-}
