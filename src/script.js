@@ -14,27 +14,34 @@ var game = { // a container for all relevant GAME information
         This is our "scene"
         */
         element: null,
-        context: null
+        context: null,
     },
     
-    enemy: {
+    elements: {
         /*
-        This is where we store enemy attributes
+        Here we'll store stuff that appears on top of the scene
         */
-        hitPoints: 0,
-        reward: 0,
-        damage: 0,
-        coordinates: null,
-        speed: 0
+        enemies: [],
+        loot: null,
+        allies: null
     },
-    
     
     /*
     FUNCTIONS
     */
+    Enemy: function(hrd, x, y, speed) {
+        this.hitPoints = hrd;
+        this.reward = hrd;
+        this.damage = hrd;
+        this.x = x;
+        this.y = y;
+        this.speed = speed;
+    },
+    
     init: function() {
         game.canvas = document.querySelector("canvas");
         game.canvas.context = game.canvas.getContext("2d");
+        game.gameLoop();
         
     },
     
@@ -43,9 +50,23 @@ var game = { // a container for all relevant GAME information
     */
 	gameRunning: null, //this is a new variable so we can pause/stop the game
 	update: function() { //this is where our logic gets updated
-		game.draw(); //call the canvas draw function
+        var random = Math.random();
+		game.draw(random); //call the canvas draw function
 	},
-	draw: function() { //this is where we will draw all the information for the game!
+	draw: function(random) { //this is where we will draw all the information for the game!
+        game.canvas.context.clearRect(0, 0, 500, 500);
+        if (typeof game.elements.enemies == null) {
+            game.elements.enemies = [];
+        }
+        if (random > 0.98) {
+            var helper = new game.Enemy(1, 10, 100, 1);
+            game.elements.enemies.push(helper);
+        }
+        for (var i = 0; i < game.elements.enemies.length; i++) {
+            var helper = game.elements.enemies[i];
+            game.canvas.context.fillRect(helper.x, helper.y, 5, 5);
+            helper.x = helper.x + 0.5;
+        }
 		game.gameLoop(); //re-iterate back to gameloop
 	},
 	gameLoop: function() { //the gameloop function
