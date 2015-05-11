@@ -31,3 +31,5 @@
 * Programming? the acticity of designing and implementing computer programes.  
 
 * Compiler? Its a computer program which translates the language of a differenr computer program into a language the computer understands. Like a mediator in conflict situations a bit.   
+
+* htmlbeginnerdogape done! It was exciting. :)
