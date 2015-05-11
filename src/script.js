@@ -9,6 +9,13 @@ var game = { // a container for all relevant GAME information
         kills: 0
     },
     
+    castle: {
+        /*
+        Here we store castle-related attributes
+        */
+        hp: 0
+    },
+    
     canvas: {
         /*
         This is our "scene"
@@ -53,26 +60,31 @@ var game = { // a container for all relevant GAME information
     */
 	gameRunning: null, //this is a new variable so we can pause/stop the game
 	update: function() { //this is where our logic gets updated
-        var random = Math.random();
-		game.draw(random); //call the canvas draw function
-	},
-	draw: function(random) { //this is where we will draw all the information for the game!
-        game.canvas.context.clearRect(0, 0, 500, 500); //clear the canvas
         if (typeof game.elements.enemies == null) { //check if array is initialized
             game.elements.enemies = []; //if not, initialize
         }
+        var random = Math.random();
         if (random > 0.98) { //chance of enemy spawning
-            var helper = new game.Enemy(1, 10, 100, 1);
+            var helper = new game.Enemy(1, 10, 120, 1);
             game.elements.enemies.push(helper); //create and add new enemy to array
         }
+		game.draw(); //call the canvas draw function
+	},
+	draw: function() { //this is where we will draw all the information for the game!
+        game.canvas.context.clearRect(0, 0, 500, 500); //clear the canvas
         for (var i = 0; i < game.elements.enemies.length; i++) {
             /*
             This draws all enemies in the array
             */
             var helper = game.elements.enemies[i];
+            if (helper.x < 234) { //if enemy has reached the castle, it stops moving
+                helper.x = helper.x + 0.5; //increment enemy x-position before loop
+            }
             game.canvas.context.fillRect(helper.x, helper.y, 5, 5);
-            helper.x = helper.x + 0.5; //increment enemy x-position after loop
         }
+        game.canvas.context.fillStyle = "#DDDDDD"; //make the castle light grey
+        game.canvas.context.fillRect(240, 80, 40, 60); //draw the castle
+        game.canvas.context.fillStyle = "#000000"; //make enemies black
 		game.gameLoop(); //re-iterate back to gameloop
 	},
 	gameLoop: function() { //the gameloop function
