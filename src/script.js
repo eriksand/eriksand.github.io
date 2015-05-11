@@ -77,8 +77,10 @@ var game = { // a container for all relevant GAME information
             This draws all enemies in the array
             */
             var helper = game.elements.enemies[i];
+            if (helper.x < 234) { //if enemy has reached the castle, it stops moving
+                helper.x = helper.x + 0.5; //increment enemy x-position before loop
+            }
             game.canvas.context.fillRect(helper.x, helper.y, 5, 5);
-            helper.x = helper.x + 0.5; //increment enemy x-position after loop
         }
         game.canvas.context.fillStyle = "#DDDDDD"; //make the castle light grey
         game.canvas.context.fillRect(240, 80, 40, 60); //draw the castle
