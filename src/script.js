@@ -53,18 +53,18 @@ var game = { // a container for all relevant GAME information
     */
 	gameRunning: null, //this is a new variable so we can pause/stop the game
 	update: function() { //this is where our logic gets updated
-        var random = Math.random();
-		game.draw(random); //call the canvas draw function
-	},
-	draw: function(random) { //this is where we will draw all the information for the game!
-        game.canvas.context.clearRect(0, 0, 500, 500); //clear the canvas
         if (typeof game.elements.enemies == null) { //check if array is initialized
             game.elements.enemies = []; //if not, initialize
         }
+        var random = Math.random();
         if (random > 0.98) { //chance of enemy spawning
             var helper = new game.Enemy(1, 10, 100, 1);
             game.elements.enemies.push(helper); //create and add new enemy to array
         }
+		game.draw(); //call the canvas draw function
+	},
+	draw: function() { //this is where we will draw all the information for the game!
+        game.canvas.context.clearRect(0, 0, 500, 500); //clear the canvas
         for (var i = 0; i < game.elements.enemies.length; i++) {
             /*
             This draws all enemies in the array
