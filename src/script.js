@@ -9,6 +9,13 @@ var game = { // a container for all relevant GAME information
         kills: 0
     },
     
+    castle: {
+        /*
+        Here we store castle-related attributes
+        */
+        hp: 0
+    },
+    
     canvas: {
         /*
         This is our "scene"
@@ -73,6 +80,9 @@ var game = { // a container for all relevant GAME information
             game.canvas.context.fillRect(helper.x, helper.y, 5, 5);
             helper.x = helper.x + 0.5; //increment enemy x-position after loop
         }
+        game.canvas.context.fillStyle = "#DDDDDD"; //make the castle light grey
+        game.canvas.context.fillRect(240, 80, 40, 60); //draw the castle
+        game.canvas.context.fillStyle = "#000000"; //make enemies black
 		game.gameLoop(); //re-iterate back to gameloop
 	},
 	gameLoop: function() { //the gameloop function
