@@ -25,3 +25,9 @@
 * Added javascript (canvas) and updated the website
 
 * Added a BUNCH of tutorials
+
+**10-11.5.2015** *(7-8h)*
+
+* Walktroughs with other collaborators
+
+* Animated the canvas, added a few classes
