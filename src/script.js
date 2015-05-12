@@ -6,7 +6,13 @@ var game = { // a container for all relevant GAME information
         */
         weapon: null,
         money: 0,
-        kills: 0
+        kills: 0,
+        
+        Weapon: function(name, dmg, price) {
+            this.name = name;
+            this.dmg = dmg;
+            this.price = price;
+        }
     },
     
     castle: {
@@ -30,7 +36,7 @@ var game = { // a container for all relevant GAME information
         */
         enemies: [],
         loot: null,
-        allies: null
+        allies: []
     },
     
     /*
@@ -43,6 +49,24 @@ var game = { // a container for all relevant GAME information
         this.x = x;
         this.y = y;
         this.speed = speed;
+        this.whenSpawned = Math.floor(Date.now() / 1000); //log when the instance was created, in seconds
+        this.OldEnoughToDespawn = function() { //return true if the enemy is more than five minutes old
+            if ((Math.floor(Date.now() / 1000) - this.whenSpawned) > 5 * 60) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+        
+    },
+    
+    Ally: function(name, dmg, price) {
+        /*
+        Store attributes related to allies
+        */
+        this.name = name;
+        this.dmg = dmg;
+        this.price = price;
     },
     
     init: function() {
@@ -77,10 +101,14 @@ var game = { // a container for all relevant GAME information
             This draws all enemies in the array
             */
             var helper = game.elements.enemies[i];
-            if (helper.x < 234) { //if enemy has reached the castle, it stops moving
-                helper.x = helper.x + 0.5; //increment enemy x-position before loop
+            if (helper.OldEnoughToDespawn()) { //check if enemy is old enough to despawn
+                game.elements.enemies.splice(i, 1); //if it is, remove it from array
+            } else { //otherwise we draw and move it
+                if (helper.x < 234) { //if enemy has reached the castle, it stops moving
+                    helper.x = helper.x + 0.5; //increment enemy x-position before loop
+                }
+                game.canvas.context.fillRect(helper.x, helper.y, 5, 5);
             }
-            game.canvas.context.fillRect(helper.x, helper.y, 5, 5);
         }
         game.canvas.context.fillStyle = "#DDDDDD"; //make the castle light grey
         game.canvas.context.fillRect(240, 80, 40, 60); //draw the castle
@@ -109,5 +137,3 @@ window.requestAnimFrame = (function(){
 }());
 
 window.onload = game.init();
-
-
