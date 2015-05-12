@@ -5,13 +5,12 @@ var game = { // a container for all relevant GAME information
         This is where we store player attributes
         */
         weapon: null,
-        money: 0,
+        loot: 0,
         kills: 0,
         
-        Weapon: function(name, dmg, price) {
+        Weapon: function(name, damage) {
             this.name = name;
-            this.dmg = dmg;
-            this.price = price;
+            this.damage = damage;
         }
     },
     
@@ -100,6 +99,7 @@ var game = { // a container for all relevant GAME information
         game.canvas.context = game.canvas.getContext("2d"); //assign context
         game.elements.enemies = [];
         game.canvas.addEventListener("click", game.checkIfHit, false);
+        game.player.weapon = new game.player.Weapon("Paper planes", 1);
         game.gameLoop(); //initialize gameLoop
     },
     
@@ -120,6 +120,11 @@ var game = { // a container for all relevant GAME information
     */
     gameRunning: null, //this is a new variable so we can pause/stop the game
     update: function() { //this is where our logic gets updated
+        var table = document.getElementById("stats");
+        stats.rows[1].cells[0].innerHTML = game.player.kills;
+        stats.rows[1].cells[1].innerHTML = game.player.loot;
+        stats.rows[1].cells[2].innerHTML = game.player.weapon.name;
+        stats.rows[1].cells[3].innerHTML = game.player.weapon.damage;
         var random = Math.random();
         if (random > 0.998) { //chance of big enemy spawning
             var randomY = 375 + Math.floor(Math.random() * 60); //Random y-coordinate between 100 and 134ish
@@ -140,9 +145,14 @@ var game = { // a container for all relevant GAME information
             This draws all enemies in the array
             */
             var helper = game.elements.enemies[i];
-            if (helper.OldEnoughToDespawn() || helper.hitPoints <= 0) { //check if enemy is old enough to despawn or has 0 health
+            if (helper.OldEnoughToDespawn()) { //check if enemy is old enough to despawn
                 game.elements.enemies.splice(i, 1); //if it is, remove it from array
-            } else { //otherwise we draw and move it
+            } else if (helper.hitPoints <= 0){
+                game.elements.enemies.splice(i, 1);
+                game.player.kills += 1;
+                game.player.loot += helper.reward;
+            }
+            else { //otherwise we draw and move it
                 if (helper.x < (game.castle.leftEdge - helper.enemyWidth)) { //if enemy has reached the castle, it stops moving
                     helper.x += helper.speed; //increment enemy x-position before loop
                 }

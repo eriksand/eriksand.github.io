@@ -1,6 +1,12 @@
 body {
     color: #888888;
     font-family: Helvetica, sans-serif;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 canvas {
@@ -8,11 +14,6 @@ canvas {
     background-repeat: no-repeat;
 }
 
-.noselect {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+td {
+    text-align: center;
 }
