@@ -95,7 +95,7 @@ var game = { // a container for all relevant GAME information
         }
         var random = Math.random();
         if (random > 0.98) { //chance of enemy spawning
-            var helper = new game.Enemy(1, 10, 120, 1);
+            var helper = new game.Enemy(1, -10, 120, 1);
             game.elements.enemies.push(helper); //create and add new enemy to array
         }
 		game.draw(); //call the canvas draw function
