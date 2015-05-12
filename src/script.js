@@ -46,7 +46,7 @@ var game = { // a container for all relevant GAME information
         this.hitPoints = hrd;
         this.reward = hrd;
         this.damage = hrd;
-	this.enemyType = hrd;
+        this.enemyType = hrd;
         /*
         Note that x and y don't work like in a normal Cartesian plane.
         Origin is in the top left of the canvas
