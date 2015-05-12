@@ -145,8 +145,7 @@ var game = { // a container for all relevant GAME information
             }
         }
         game.canvas.context.fillStyle = "#DDDDDD"; //make the castle light grey
-        var castleLeftEdge = game.castle.leftEdge; //get castles left edge x-position
-        game.canvas.context.fillRect(castleLeftEdge, 80, 40, 60); //draw the castle
+        game.canvas.context.fillRect(game.castle.leftEdge, 80, 40, 60); //draw the castle
         game.canvas.context.fillStyle = "#000000"; //make enemies black
 		game.gameLoop(); //re-iterate back to gameloop
 	},
