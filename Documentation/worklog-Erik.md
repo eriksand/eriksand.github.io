@@ -8,3 +8,12 @@
 *  New day, reformatted this worklog so it should be in markdown
 *  Created an issue about the formatting about this document and added some spacing to make it looka nice :)
 *  Seems to be working, thanks Michael
+  
+
+**12.5.2015**
+*  Today I have changed spawn location of the enemies, so that they spawn outside of the canvas and smoothly slide in
+*  Then I got inspired and made some bigAss enemies!
+*  I then realized they stop halfway into the castle
+*  I made the enemies stop depending on their size (In writing moment not yet pulled)
+*  They also spawn exactly their own size left of the canvas now.
+*  Spread out the enemy wave over the y-axis. Looks pretty cool!
