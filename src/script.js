@@ -20,7 +20,7 @@ var game = { // a container for all relevant GAME information
         Here we store castle-related attributes
         */
         hp: 0,
-        leftEdge: 240,
+        leftEdge: 800,
     },
     
     canvas: {
@@ -57,9 +57,9 @@ var game = { // a container for all relevant GAME information
         
         var size;
         if (this.enemyType === 1) {
-            size = 5;
+            size = 20;
         } else if (this.enemyType === 2) {
-            size = 8;
+            size = 40;
         }
         this.enemyWidth = size;
         this.enemyHeight = size;
@@ -122,19 +122,19 @@ var game = { // a container for all relevant GAME information
     update: function() { //this is where our logic gets updated
         var random = Math.random();
         if (random > 0.998) { //chance of big enemy spawning
-            var randomY = 100 + Math.floor(Math.random() * 35); //Random y-coordinate between 100 and 134ish
-            var helper = new game.Enemy(2, 0, randomY, 0.2);
+            var randomY = 375 + Math.floor(Math.random() * 60); //Random y-coordinate between 100 and 134ish
+            var helper = new game.Enemy(2, 0, randomY, 0.5);
             game.elements.enemies.push(helper); //create and add new big enemy to array
         } else if (random > 0.98) { //chance of normal enemy spawning if big one wasn't spawned.
             // Technically that's not the actual chance, since a big enemy could have been spawned as well
-            var randomY = 100 + Math.floor(Math.random() * 35); //random y-coordinate between 100 and 134ish
-            var helper = new game.Enemy(1, 0, randomY, 0.2);
+            var randomY = 375 + Math.floor(Math.random() * 80); //random y-coordinate between 100 and 134ish
+            var helper = new game.Enemy(1, 0, randomY, 0.5);
             game.elements.enemies.push(helper); //create and add new enemy to array
         }
         game.draw(); //call the canvas draw function
     },
     draw: function() { //this is where we will draw all the information for the game!
-        game.canvas.context.clearRect(0, 0, 500, 500); //clear the canvas
+        game.canvas.context.clearRect(0, 0, 1000, 500); //clear the canvas
         for (var i = 0; i < game.elements.enemies.length; i++) {
             /*
             This draws all enemies in the array
@@ -154,7 +154,7 @@ var game = { // a container for all relevant GAME information
             }
         }
         game.canvas.context.fillStyle = "#DDDDDD"; //make the castle light grey
-        game.canvas.context.fillRect(game.castle.leftEdge, 80, 40, 60); //draw the castle
+        game.canvas.context.fillRect(game.castle.leftEdge, 230, 150, 250); //draw the castle
         game.canvas.context.fillStyle = "#000000"; //make enemies black
         game.gameLoop(); //re-iterate back to gameloop
     },
