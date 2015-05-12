@@ -46,6 +46,7 @@ var game = { // a container for all relevant GAME information
         this.hitPoints = hrd;
         this.reward = hrd;
         this.damage = hrd;
+		this.enemyType = hrd;
         /*
         Note that x and y don't work like in a normal Cartesian plane.
         Origin is in the top left of the canvas
@@ -65,6 +66,8 @@ var game = { // a container for all relevant GAME information
         };
         
     },
+	
+	
     
     Ally: function(name, dmg, price) {
         /*
@@ -94,7 +97,11 @@ var game = { // a container for all relevant GAME information
             game.elements.enemies = []; //if not, initialize
         }
         var random = Math.random();
-        if (random > 0.98) { //chance of enemy spawning
+        if (random > 0.998) { //chance of big enemy spawning
+            var helper = new game.Enemy(2, -10, 120, 1);
+            game.elements.enemies.push(helper); //create and add new big enemy to array
+        } else if (random > 0.98) { //chance of normal enemy spawning if big one wasn't spawned.
+		// Technically that's not the actual chance, since a big enemy could have been spawned as well
             var helper = new game.Enemy(1, -10, 120, 1);
             game.elements.enemies.push(helper); //create and add new enemy to array
         }
@@ -113,7 +120,12 @@ var game = { // a container for all relevant GAME information
                 if (helper.x < 234) { //if enemy has reached the castle, it stops moving
                     helper.x = helper.x + 0.5; //increment enemy x-position before loop
                 }
-                game.canvas.context.fillRect(helper.x, helper.y, 5, 5);
+                if (helper.enemyType === 1) {
+					game.canvas.context.fillRect(helper.x, helper.y, 5, 5);
+				} else if (helper.enemyType === 2) {
+					game.canvas.context.fillRect(helper.x, helper.y, 8, 8);
+				}
+				
             }
         }
         game.canvas.context.fillStyle = "#DDDDDD"; //make the castle light grey
