@@ -115,12 +115,12 @@ var game = { // a container for all relevant GAME information
         var random = Math.random();
         if (random > 0.998) { //chance of big enemy spawning
             var randomY = 100 + Math.floor(Math.random() * 35); //Random y-coordinate between 100 and 134ish
-            var helper = new game.Enemy(2, 0, randomY, 1);
+            var helper = new game.Enemy(2, 0, randomY, 0.5);
             game.elements.enemies.push(helper); //create and add new big enemy to array
         } else if (random > 0.98) { //chance of normal enemy spawning if big one wasn't spawned.
             // Technically that's not the actual chance, since a big enemy could have been spawned as well
             var randomY = 100 + Math.floor(Math.random() * 35); //random y-coordinate between 100 and 134ish
-            var helper = new game.Enemy(1, 0, randomY, 1);
+            var helper = new game.Enemy(1, 0, randomY, 0.5);
             game.elements.enemies.push(helper); //create and add new enemy to array
         }
         game.draw(); //call the canvas draw function
@@ -136,7 +136,7 @@ var game = { // a container for all relevant GAME information
                 game.elements.enemies.splice(i, 1); //if it is, remove it from array
             } else { //otherwise we draw and move it
                 if (helper.x < (game.castle.leftEdge - helper.enemyWidth)) { //if enemy has reached the castle, it stops moving
-                    helper.x = helper.x + 0.5; //increment enemy x-position before loop
+                    helper.x += helper.speed; //increment enemy x-position before loop
                 }
                 if (helper.enemyType === 1) {
                     game.canvas.context.fillRect(helper.x, helper.y, helper.enemyWidth, helper.enemyHeight);
