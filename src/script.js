@@ -69,7 +69,7 @@ var game = { // a container for all relevant GAME information
         x+ is to the right
         y+ is DOWNWARD!
         */
-        this.x = x;
+        this.x = x - this.enemyWidth;
         this.y = y;
         this.speed = speed;
         this.whenSpawned = Math.floor(Date.now() / 1000); //log when the instance was created, in seconds
