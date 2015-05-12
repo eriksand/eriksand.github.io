@@ -83,8 +83,6 @@ var game = { // a container for all relevant GAME information
         
     },
     
-    
-    
     Ally: function(name, dmg, price) {
         /*
         Store attributes related to allies
@@ -100,8 +98,21 @@ var game = { // a container for all relevant GAME information
         */
         game.canvas = document.querySelector("canvas"); //assign canvas
         game.canvas.context = game.canvas.getContext("2d"); //assign context
+        game.elements.enemies = [];
+        game.canvas.addEventListener("click", game.checkIfHit, false);
         game.gameLoop(); //initialize gameLoop
-        
+    },
+    
+    checkIfHit: function() {
+        var mouseX = event.pageX - game.canvas.offsetLeft;
+        var mouseY = event.pageY - game.canvas.offsetTop;
+        game.elements.enemies.forEach(function(helper) {
+            if (mouseY > helper.y && mouseY < helper.y + helper.enemyHeight 
+                && mouseX > helper.x && mouseX < helper.x + helper.enemyWidth) {
+                    
+                helper.hitPoints--;
+            }
+        });
     },
     
     /*
@@ -109,18 +120,15 @@ var game = { // a container for all relevant GAME information
     */
     gameRunning: null, //this is a new variable so we can pause/stop the game
     update: function() { //this is where our logic gets updated
-        if (typeof game.elements.enemies == null) { //check if array is initialized
-            game.elements.enemies = []; //if not, initialize
-        }
         var random = Math.random();
         if (random > 0.998) { //chance of big enemy spawning
             var randomY = 100 + Math.floor(Math.random() * 35); //Random y-coordinate between 100 and 134ish
-            var helper = new game.Enemy(2, 0, randomY, 0.5);
+            var helper = new game.Enemy(2, 0, randomY, 0.2);
             game.elements.enemies.push(helper); //create and add new big enemy to array
         } else if (random > 0.98) { //chance of normal enemy spawning if big one wasn't spawned.
             // Technically that's not the actual chance, since a big enemy could have been spawned as well
             var randomY = 100 + Math.floor(Math.random() * 35); //random y-coordinate between 100 and 134ish
-            var helper = new game.Enemy(1, 0, randomY, 0.5);
+            var helper = new game.Enemy(1, 0, randomY, 0.2);
             game.elements.enemies.push(helper); //create and add new enemy to array
         }
         game.draw(); //call the canvas draw function
@@ -132,7 +140,7 @@ var game = { // a container for all relevant GAME information
             This draws all enemies in the array
             */
             var helper = game.elements.enemies[i];
-            if (helper.OldEnoughToDespawn()) { //check if enemy is old enough to despawn
+            if (helper.OldEnoughToDespawn() || helper.hitPoints <= 0) { //check if enemy is old enough to despawn or has 0 health
                 game.elements.enemies.splice(i, 1); //if it is, remove it from array
             } else { //otherwise we draw and move it
                 if (helper.x < (game.castle.leftEdge - helper.enemyWidth)) { //if enemy has reached the castle, it stops moving
@@ -166,9 +174,9 @@ window.requestAnimFrame = (function(){
         window.mozRequestAnimationFrame || 
         window.oRequestAnimationFrame || 
         window.msRequestAnimationFrame || 
-    function (callback, element){
-        fpsLoop = window.setTimeout(callback, 1000 / 60);
-    };
+        function (callback, element){
+            fpsLoop = window.setTimeout(callback, 1000 / 60);
+        };
 }());
 
 window.onload = game.init();
