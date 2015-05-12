@@ -19,7 +19,8 @@ var game = { // a container for all relevant GAME information
         /*
         Here we store castle-related attributes
         */
-        hp: 0
+        hp: 0,
+        leftEdge: 240,
     },
     
     canvas: {
@@ -46,7 +47,22 @@ var game = { // a container for all relevant GAME information
         this.hitPoints = hrd;
         this.reward = hrd;
         this.damage = hrd;
+        /*
+        @Erkki: The enemy type is based now based on the hrd. Meaning that if hrd is 1,
+        we will have an enemy type 1. The enemy size will now depend on the enemyType.
+        In the future the size will depend on enemy sprites, I guess.
+        For now an enemyType 1 will be 5 pixels wide and type 2 will be 8 pixels wide
+        */
         this.enemyType = hrd;
+        
+        var size;
+        if (this.enemyType === 1) {
+            size = 5;
+        } else if (this.enemyType === 2) {
+            size = 8;
+        }
+        this.enemyWidth = size;
+        this.enemyHeight = size;
         /*
         Note that x and y don't work like in a normal Cartesian plane.
         Origin is in the top left of the canvas
@@ -117,19 +133,20 @@ var game = { // a container for all relevant GAME information
             if (helper.OldEnoughToDespawn()) { //check if enemy is old enough to despawn
                 game.elements.enemies.splice(i, 1); //if it is, remove it from array
             } else { //otherwise we draw and move it
-                if (helper.x < 234) { //if enemy has reached the castle, it stops moving
+                if (helper.x < (game.castle.leftEdge - helper.enemyWidth)) { //if enemy has reached the castle, it stops moving
                     helper.x = helper.x + 0.5; //increment enemy x-position before loop
                 }
                 if (helper.enemyType === 1) {
-					game.canvas.context.fillRect(helper.x, helper.y, 5, 5);
+					game.canvas.context.fillRect(helper.x, helper.y, helper.enemyWidth, helper.enemyHeight);
 				} else if (helper.enemyType === 2) {
-					game.canvas.context.fillRect(helper.x, helper.y, 8, 8);
+					game.canvas.context.fillRect(helper.x, helper.y, helper.enemyWidth, helper.enemyHeight);
 				}
 				
             }
         }
         game.canvas.context.fillStyle = "#DDDDDD"; //make the castle light grey
-        game.canvas.context.fillRect(240, 80, 40, 60); //draw the castle
+        var castleLeftEdge = game.castle.leftEdge; //get castles left edge x-position
+        game.canvas.context.fillRect(castleLeftEdge, 80, 40, 60); //draw the castle
         game.canvas.context.fillStyle = "#000000"; //make enemies black
 		game.gameLoop(); //re-iterate back to gameloop
 	},
