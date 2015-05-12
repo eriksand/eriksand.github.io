@@ -5,13 +5,12 @@ var game = { // a container for all relevant GAME information
         This is where we store player attributes
         */
         weapon: null,
-        money: 0,
+        loot: 0,
         kills: 0,
         
-        Weapon: function(name, dmg, price) {
+        Weapon: function(name, damage) {
             this.name = name;
-            this.dmg = dmg;
-            this.price = price;
+            this.damage = damage;
         }
     },
     
@@ -20,7 +19,7 @@ var game = { // a container for all relevant GAME information
         Here we store castle-related attributes
         */
         hp: 0,
-        leftEdge: 240,
+        leftEdge: 800,
     },
     
     canvas: {
@@ -57,9 +56,9 @@ var game = { // a container for all relevant GAME information
         
         var size;
         if (this.enemyType === 1) {
-            size = 5;
+            size = 20;
         } else if (this.enemyType === 2) {
-            size = 8;
+            size = 40;
         }
         this.enemyWidth = size;
         this.enemyHeight = size;
@@ -83,8 +82,6 @@ var game = { // a container for all relevant GAME information
         
     },
     
-    
-    
     Ally: function(name, dmg, price) {
         /*
         Store attributes related to allies
@@ -100,8 +97,22 @@ var game = { // a container for all relevant GAME information
         */
         game.canvas = document.querySelector("canvas"); //assign canvas
         game.canvas.context = game.canvas.getContext("2d"); //assign context
+        game.elements.enemies = [];
+        game.canvas.addEventListener("click", game.checkIfHit, false);
+        game.player.weapon = new game.player.Weapon("Paper planes", 1);
         game.gameLoop(); //initialize gameLoop
-        
+    },
+    
+    checkIfHit: function() {
+        var mouseX = event.pageX - game.canvas.offsetLeft;
+        var mouseY = event.pageY - game.canvas.offsetTop;
+        game.elements.enemies.forEach(function(helper) {
+            if (mouseY > helper.y && mouseY < helper.y + helper.enemyHeight 
+                && mouseX > helper.x && mouseX < helper.x + helper.enemyWidth) {
+                    
+                helper.hitPoints--;
+            }
+        });
     },
     
     /*
@@ -109,24 +120,26 @@ var game = { // a container for all relevant GAME information
     */
     gameRunning: null, //this is a new variable so we can pause/stop the game
     update: function() { //this is where our logic gets updated
-        if (typeof game.elements.enemies == null) { //check if array is initialized
-            game.elements.enemies = []; //if not, initialize
-        }
+        var table = document.getElementById("stats");
+        stats.rows[1].cells[0].innerHTML = game.player.kills;
+        stats.rows[1].cells[1].innerHTML = game.player.loot;
+        stats.rows[1].cells[2].innerHTML = game.player.weapon.name;
+        stats.rows[1].cells[3].innerHTML = game.player.weapon.damage;
         var random = Math.random();
         if (random > 0.998) { //chance of big enemy spawning
-            var randomY = 100 + Math.floor(Math.random() * 35); //Random y-coordinate between 100 and 134ish
+            var randomY = 375 + Math.floor(Math.random() * 60); //Random y-coordinate between 100 and 134ish
             var helper = new game.Enemy(2, 0, randomY, 0.5);
             game.elements.enemies.push(helper); //create and add new big enemy to array
         } else if (random > 0.98) { //chance of normal enemy spawning if big one wasn't spawned.
             // Technically that's not the actual chance, since a big enemy could have been spawned as well
-            var randomY = 100 + Math.floor(Math.random() * 35); //random y-coordinate between 100 and 134ish
+            var randomY = 375 + Math.floor(Math.random() * 80); //random y-coordinate between 100 and 134ish
             var helper = new game.Enemy(1, 0, randomY, 0.5);
             game.elements.enemies.push(helper); //create and add new enemy to array
         }
         game.draw(); //call the canvas draw function
     },
     draw: function() { //this is where we will draw all the information for the game!
-        game.canvas.context.clearRect(0, 0, 500, 500); //clear the canvas
+        game.canvas.context.clearRect(0, 0, 1000, 500); //clear the canvas
         for (var i = 0; i < game.elements.enemies.length; i++) {
             /*
             This draws all enemies in the array
@@ -134,7 +147,12 @@ var game = { // a container for all relevant GAME information
             var helper = game.elements.enemies[i];
             if (helper.OldEnoughToDespawn()) { //check if enemy is old enough to despawn
                 game.elements.enemies.splice(i, 1); //if it is, remove it from array
-            } else { //otherwise we draw and move it
+            } else if (helper.hitPoints <= 0){
+                game.elements.enemies.splice(i, 1);
+                game.player.kills += 1;
+                game.player.loot += helper.reward;
+            }
+            else { //otherwise we draw and move it
                 if (helper.x < (game.castle.leftEdge - helper.enemyWidth)) { //if enemy has reached the castle, it stops moving
                     helper.x += helper.speed; //increment enemy x-position before loop
                 }
@@ -146,7 +164,7 @@ var game = { // a container for all relevant GAME information
             }
         }
         game.canvas.context.fillStyle = "#DDDDDD"; //make the castle light grey
-        game.canvas.context.fillRect(game.castle.leftEdge, 80, 40, 60); //draw the castle
+        game.canvas.context.fillRect(game.castle.leftEdge, 230, 150, 250); //draw the castle
         game.canvas.context.fillStyle = "#000000"; //make enemies black
         game.gameLoop(); //re-iterate back to gameloop
     },
@@ -166,9 +184,9 @@ window.requestAnimFrame = (function(){
         window.mozRequestAnimationFrame || 
         window.oRequestAnimationFrame || 
         window.msRequestAnimationFrame || 
-    function (callback, element){
-        fpsLoop = window.setTimeout(callback, 1000 / 60);
-    };
+        function (callback, element){
+            fpsLoop = window.setTimeout(callback, 1000 / 60);
+        };
 }());
 
 window.onload = game.init();
