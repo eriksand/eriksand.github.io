@@ -82,8 +82,8 @@ var game = { // a container for all relevant GAME information
         };
         
     },
-	
-	
+    
+    
     
     Ally: function(name, dmg, price) {
         /*
@@ -107,23 +107,23 @@ var game = { // a container for all relevant GAME information
     /*
     Animation routines from http://incremental.barriereader.co.uk/one.html?v=15
     */
-	gameRunning: null, //this is a new variable so we can pause/stop the game
-	update: function() { //this is where our logic gets updated
+    gameRunning: null, //this is a new variable so we can pause/stop the game
+    update: function() { //this is where our logic gets updated
         if (typeof game.elements.enemies == null) { //check if array is initialized
             game.elements.enemies = []; //if not, initialize
         }
         var random = Math.random();
         if (random > 0.998) { //chance of big enemy spawning
-            var helper = new game.Enemy(2, -10, 120, 1);
+            var helper = new game.Enemy(2, 0, 120, 1);
             game.elements.enemies.push(helper); //create and add new big enemy to array
         } else if (random > 0.98) { //chance of normal enemy spawning if big one wasn't spawned.
-		// Technically that's not the actual chance, since a big enemy could have been spawned as well
-            var helper = new game.Enemy(1, -10, 120, 1);
+            // Technically that's not the actual chance, since a big enemy could have been spawned as well
+            var helper = new game.Enemy(1, 0, 120, 1);
             game.elements.enemies.push(helper); //create and add new enemy to array
         }
-		game.draw(); //call the canvas draw function
-	},
-	draw: function() { //this is where we will draw all the information for the game!
+        game.draw(); //call the canvas draw function
+    },
+    draw: function() { //this is where we will draw all the information for the game!
         game.canvas.context.clearRect(0, 0, 500, 500); //clear the canvas
         for (var i = 0; i < game.elements.enemies.length; i++) {
             /*
@@ -137,37 +137,36 @@ var game = { // a container for all relevant GAME information
                     helper.x = helper.x + 0.5; //increment enemy x-position before loop
                 }
                 if (helper.enemyType === 1) {
-					game.canvas.context.fillRect(helper.x, helper.y, helper.enemyWidth, helper.enemyHeight);
-				} else if (helper.enemyType === 2) {
-					game.canvas.context.fillRect(helper.x, helper.y, helper.enemyWidth, helper.enemyHeight);
-				}
-				
+                    game.canvas.context.fillRect(helper.x, helper.y, helper.enemyWidth, helper.enemyHeight);
+                } else if (helper.enemyType === 2) {
+                    game.canvas.context.fillRect(helper.x, helper.y, helper.enemyWidth, helper.enemyHeight);
+                }
             }
         }
         game.canvas.context.fillStyle = "#DDDDDD"; //make the castle light grey
         game.canvas.context.fillRect(game.castle.leftEdge, 80, 40, 60); //draw the castle
         game.canvas.context.fillStyle = "#000000"; //make enemies black
-		game.gameLoop(); //re-iterate back to gameloop
-	},
-	gameLoop: function() { //the gameloop function
-		game.gameRunning = setTimeout(function() { 
-			requestAnimFrame(game.update, game.canvas); 
-		}, 10);
-	}
+        game.gameLoop(); //re-iterate back to gameloop
+    },
+    gameLoop: function() { //the gameloop function
+        game.gameRunning = setTimeout(function() { 
+            requestAnimFrame(game.update, game.canvas); 
+        }, 10);
+    }
 };
 
 /*
 Helper. I don't know why this works
 */
 window.requestAnimFrame = (function(){
-	return window.requestAnimationFrame || 
-		window.webkitRequestAnimationFrame || 
-		window.mozRequestAnimationFrame || 
-		window.oRequestAnimationFrame || 
-		window.msRequestAnimationFrame || 
-	function (callback, element){
-		fpsLoop = window.setTimeout(callback, 1000 / 60);
-	};
+    return window.requestAnimationFrame || 
+        window.webkitRequestAnimationFrame || 
+        window.mozRequestAnimationFrame || 
+        window.oRequestAnimationFrame || 
+        window.msRequestAnimationFrame || 
+    function (callback, element){
+        fpsLoop = window.setTimeout(callback, 1000 / 60);
+    };
 }());
 
 window.onload = game.init();
