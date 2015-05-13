@@ -146,9 +146,12 @@ var game = { // a container for all relevant GAME information
         else { //otherwise we draw and move it
             if (helper.x < (game.castle.leftEdge - helper.enemyWidth)) { //if enemy has reached the castle, it stops moving
                 helper.x += helper.speed; //increment enemy x-position before loop
-            }
+            }            
             game.canvas.context.fillStyle = helper.rgb; //set color of the box
             game.canvas.context.fillRect(helper.x, helper.y, helper.enemyWidth, helper.enemyHeight);
+            game.canvas.context.strokeStyle = "#000000"; //black border for all enemies
+            game.canvas.context.lineWidth = helper.enemyWidth / 20; //thicker borders for thicker enemies
+            game.canvas.context.strokeRect(helper.x, helper.y, helper.enemyWidth, helper.enemyHeight); //draw the border
         }
     },
     
