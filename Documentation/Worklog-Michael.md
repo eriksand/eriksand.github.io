@@ -31,3 +31,9 @@
 * Walktroughs with other collaborators
 
 * Animated the canvas, added a few classes
+
+**12-13.5.2015** *(10-12h)*
+
+* More troubleshooting with other collaborators
+
+* Implemented basic gameplay and stat logging
