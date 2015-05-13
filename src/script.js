@@ -121,7 +121,7 @@ var game = { // a container for all relevant GAME information
     },
     
     playOuchSound: function() {
-        document.getElementById("audio/ouch.mp3").play();
+        document.getElementById("audio/ouch.wav").play();
     },
     
     spawnEnemy: function() {
