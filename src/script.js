@@ -99,14 +99,25 @@ var game = { // a container for all relevant GAME information
         game.canvas.context = game.canvas.getContext("2d"); //assign context
         game.elements.enemies = [];
         game.canvas.addEventListener("click", game.checkIfHit, false);
-        game.player.weapon = new game.player.Weapon("Paper planes", 1);
+        game.player.weapon = new game.player.Weapon("Paper planes", 1); //give the player a starting weapon
         game.gameLoop(); //initialize gameLoop
     },
     
     checkIfHit: function() {
+        /*
+        This function checks if a player's click hits an enemy element
+        */
         var mouseX = event.pageX - game.canvas.offsetLeft;
+        /*
+        event.pageX returns the distance from the left edge of the browser window
+        in pixels. canvas.offsetLeft returns the distance between the left edge of
+        the canvas and the left edge of the browser window. By subtracting the offset
+        from the pageX we get the canvas' clicked x-coord.
+        */
         var mouseY = event.pageY - game.canvas.offsetTop;
         game.elements.enemies.forEach(function(helper) {
+            
+            //this if block basically means if (click is within edges of element)
             if (mouseY > helper.y && mouseY < helper.y + helper.enemyHeight 
                 && mouseX > helper.x && mouseX < helper.x + helper.enemyWidth) {
                     
@@ -120,11 +131,15 @@ var game = { // a container for all relevant GAME information
     */
     gameRunning: null, //this is a new variable so we can pause/stop the game
     update: function() { //this is where our logic gets updated
+    
+        //this is where we update our table
         var table = document.getElementById("stats");
         stats.rows[1].cells[0].innerHTML = game.player.kills;
         stats.rows[1].cells[1].innerHTML = game.player.loot;
         stats.rows[1].cells[2].innerHTML = game.player.weapon.name;
         stats.rows[1].cells[3].innerHTML = game.player.weapon.damage;
+        //table updated
+        
         var random = Math.random();
         if (random > 0.998) { //chance of big enemy spawning
             var randomY = 375 + Math.floor(Math.random() * 60); //Random y-coordinate between 100 and 134ish
@@ -148,9 +163,10 @@ var game = { // a container for all relevant GAME information
             if (helper.OldEnoughToDespawn()) { //check if enemy is old enough to despawn
                 game.elements.enemies.splice(i, 1); //if it is, remove it from array
             } else if (helper.hitPoints <= 0){
-                game.elements.enemies.splice(i, 1);
-                game.player.kills += 1;
-                game.player.loot += helper.reward;
+                //if the enemy has been killed by something other than timeout
+                game.elements.enemies.splice(i, 1); //remove it from the array
+                game.player.kills += 1; //add one to the player's kills
+                game.player.loot += helper.reward; //give the appropriate reward to the player
             }
             else { //otherwise we draw and move it
                 if (helper.x < (game.castle.leftEdge - helper.enemyWidth)) { //if enemy has reached the castle, it stops moving
