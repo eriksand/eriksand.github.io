@@ -42,26 +42,20 @@ var game = { // a container for all relevant GAME information
     /*
     FUNCTIONS
     */
-    Enemy: function(hrd, x, y, speed) {
-        this.hitPoints = hrd;
-        this.reward = hrd;
-        this.damage = hrd;
+    Enemy: function(type, x, y, speed, rgb) {
+        this.hitPoints = type;
+        this.reward = type;
+        this.damage = type;
+        this.speed = speed;
+        this.rgb = rgb; //hex rgb value
         /*
-        @Erkki: The enemy type is based now based on the hrd. Meaning that if hrd is 1,
-        we will have an enemy type 1. The enemy size will now depend on the enemyType.
+        @Mike: The enemy attributes is now based on the type. Meaning that if type is 1,
+        we will have an enemy with attributes = 1. The enemy size will now depend on the type param.
         In the future the size will depend on enemy sprites, I guess.
-        For now an enemyType 1 will be 5 pixels wide and type 2 will be 8 pixels wide
+        For now an enemyType 1 will be 20 pixels wide and type 2 will be 40 pixels wide
         */
-        this.enemyType = hrd;
-        
-        var size;
-        if (this.enemyType === 1) {
-            size = 20;
-        } else if (this.enemyType === 2) {
-            size = 40;
-        }
-        this.enemyWidth = size;
-        this.enemyHeight = size;
+        this.enemyWidth = 20 * type;
+        this.enemyHeight = 20 * type;
         /*
         Note that x and y don't work like in a normal Cartesian plane.
         Origin is in the top left of the canvas
@@ -70,7 +64,6 @@ var game = { // a container for all relevant GAME information
         */
         this.x = x - this.enemyWidth;
         this.y = y;
-        this.speed = speed;
         this.whenSpawned = Math.floor(Date.now() / 1000); //log when the instance was created, in seconds
         this.OldEnoughToDespawn = function() { //return true if the enemy is more than five minutes old
             if ((Math.floor(Date.now() / 1000) - this.whenSpawned) > 5 * 60) {
@@ -126,6 +119,42 @@ var game = { // a container for all relevant GAME information
         });
     },
     
+    spawnEnemy: function() {
+        var random = Math.random();
+        var helper;
+        randomY = 375 + Math.floor(Math.random() * 60);
+        if (random > 0.998) {
+            helper = new game.Enemy(2, 0, randomY, 0.5, "#FF0000");
+        } else if (random > 0.98) {
+            helper = new game.Enemy(1, 0, randomY, 0.5, "#00FF00");
+        }
+        if (typeof helper !== "undefined") { //if an enemy wasn't generated, we don't put it in the array
+            game.elements.enemies.push(helper); //clever, huh?
+        }
+    },
+    
+    drawEnemy: function(index) {
+        var helper = game.elements.enemies[index];
+        if (helper.OldEnoughToDespawn()) { //check if enemy is old enough to despawn
+            game.elements.enemies.splice(index, 1); //if it is, remove it from array
+        } else if (helper.hitPoints <= 0){
+            //if the enemy has been killed by something other than timeout
+            game.elements.enemies.splice(index, 1); //remove it from the array
+            game.player.kills++; //add one to the player's kills
+            game.player.loot += helper.reward; //give the appropriate reward to the player
+        }
+        else { //otherwise we draw and move it
+            if (helper.x < (game.castle.leftEdge - helper.enemyWidth)) { //if enemy has reached the castle, it stops moving
+                helper.x += helper.speed; //increment enemy x-position before loop
+            }            
+            game.canvas.context.fillStyle = helper.rgb; //set color of the box
+            game.canvas.context.fillRect(helper.x, helper.y, helper.enemyWidth, helper.enemyHeight);
+            game.canvas.context.strokeStyle = "#000000"; //black border for all enemies
+            game.canvas.context.lineWidth = helper.enemyWidth / 20; //thicker borders for thicker enemies
+            game.canvas.context.strokeRect(helper.x, helper.y, helper.enemyWidth, helper.enemyHeight); //draw the border
+        }
+    },
+    
     /*
     Animation routines from http://incremental.barriereader.co.uk/one.html?v=15
     */
@@ -140,17 +169,7 @@ var game = { // a container for all relevant GAME information
         stats.rows[1].cells[3].innerHTML = game.player.weapon.damage;
         //table updated
         
-        var random = Math.random();
-        if (random > 0.998) { //chance of big enemy spawning
-            var randomY = 375 + Math.floor(Math.random() * 60); //Random y-coordinate between 100 and 134ish
-            var helper = new game.Enemy(2, 0, randomY, 0.5);
-            game.elements.enemies.push(helper); //create and add new big enemy to array
-        } else if (random > 0.98) { //chance of normal enemy spawning if big one wasn't spawned.
-            // Technically that's not the actual chance, since a big enemy could have been spawned as well
-            var randomY = 375 + Math.floor(Math.random() * 80); //random y-coordinate between 100 and 134ish
-            var helper = new game.Enemy(1, 0, randomY, 0.5);
-            game.elements.enemies.push(helper); //create and add new enemy to array
-        }
+        game.spawnEnemy();
         game.draw(); //call the canvas draw function
     },
     draw: function() { //this is where we will draw all the information for the game!
@@ -159,29 +178,10 @@ var game = { // a container for all relevant GAME information
             /*
             This draws all enemies in the array
             */
-            var helper = game.elements.enemies[i];
-            if (helper.OldEnoughToDespawn()) { //check if enemy is old enough to despawn
-                game.elements.enemies.splice(i, 1); //if it is, remove it from array
-            } else if (helper.hitPoints <= 0){
-                //if the enemy has been killed by something other than timeout
-                game.elements.enemies.splice(i, 1); //remove it from the array
-                game.player.kills += 1; //add one to the player's kills
-                game.player.loot += helper.reward; //give the appropriate reward to the player
-            }
-            else { //otherwise we draw and move it
-                if (helper.x < (game.castle.leftEdge - helper.enemyWidth)) { //if enemy has reached the castle, it stops moving
-                    helper.x += helper.speed; //increment enemy x-position before loop
-                }
-                if (helper.enemyType === 1) {
-                    game.canvas.context.fillRect(helper.x, helper.y, helper.enemyWidth, helper.enemyHeight);
-                } else if (helper.enemyType === 2) {
-                    game.canvas.context.fillRect(helper.x, helper.y, helper.enemyWidth, helper.enemyHeight);
-                }
-            }
+            game.drawEnemy(i);
         }
         game.canvas.context.fillStyle = "#DDDDDD"; //make the castle light grey
         game.canvas.context.fillRect(game.castle.leftEdge, 230, 150, 250); //draw the castle
-        game.canvas.context.fillStyle = "#000000"; //make enemies black
         game.gameLoop(); //re-iterate back to gameloop
     },
     gameLoop: function() { //the gameloop function
