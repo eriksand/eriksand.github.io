@@ -115,8 +115,13 @@ var game = { // a container for all relevant GAME information
                 && mouseX > helper.x && mouseX < helper.x + helper.enemyWidth) {
                     
                 helper.hitPoints--;
+                playOuchSound();
             }
         });
+    },
+    
+    playOuchSound: function() {
+        document.getElementById("audio/ouch.mp3").play();
     },
     
     spawnEnemy: function() {
