@@ -117,8 +117,15 @@ var game = { // a container for all relevant GAME information
                 && mouseX > helper.x && mouseX < helper.x + helper.enemyWidth) {
                     
                 helper.hitPoints--;
+                playOuchSound();
             }
         });
+    },
+    
+    // Play the audio file ouch.wav, path is in the index.html, the getElementById finds the element
+    // in the html-file. In this case the audio file, and then we play it :) @Erkki
+    playOuchSound: function() {
+        document.getElementById("audio/ouch.wav").play();
     },
     
     spawnEnemy: function() {
