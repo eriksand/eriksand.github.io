@@ -1,40 +1,57 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
+
 <head>
-    <title>WIP</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Michael's website</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 
-<body>
-    <h1>Castle Defense Idle</h1>
-    <canvas id="canvas" width="1000" height="500"></canvas>
+<body onload> 
+
+    <header>
+        <h1>Michael Aminoff's website</h1>
+        
+        <nav>
+            <ul id="navBar">
+                <li><a href="#start">Start</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#cv">CV</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
     
-    <table style="width:1000px" id="stats">
-        <tr>
-            <th>Kills</th>
-            <th>Loot</th> 
-            <th>Weapon</th>
-            <th>Damage</th>
-        </tr>
-        <tr>
-            <td>0</td>
-            <td>0</td> 
-            <td>0</td>
-            <td>0</td>
-        </tr>
-    </table>
+    <article id="start">
+        <a name="start"></a>
+        <h3>Hello!</h3>
+        <p>It seems you've found your way to my site!</p>
+        <p>Here I can fool around with HTML, CSS, and JS - without too many people noticing.<br/>
+        As you can see, it's not too interesting, but it's not as shabby as it used to be.</p>
+        <p>Feel free to look around at what I have so far.</p>
+    </article>
     
-    <audio src="audio/ouch.wav" id="audio/ouch.wav">
-        Your stupid browser doesn't support HTML 5 audio.
-    </audio>
+    <article id="projects">
+        <a name="projects"></a>
+        <h3>My projects</h3>
+        <ul>
+            <li><a href="CaDeId/index.html">Castle Defense Idle</a></li>
+        </ul>
+    </article>
     
-    <footer>
-    <p>
-        Copyright <a href="http://www.github.com/micaminoff">Michael Aminoff</a> et al.
-    </p>
-    </footer>
+    <article id="cv">
+        <a name="cv"></a>
+        <h3>Curriculum Vitae</h3>
+        <p>Test</p>
+    </article>
     
-    <script src="src/script.js"></script>
+    <article id="contact">
+        <a name="contact"></a>
+        <h3>Contact me!</h3>
+        <p>Test</p>
+    </article>
+
+    <script src="script.js"></script>
 </body>
 
 </html>

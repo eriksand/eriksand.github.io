@@ -18,7 +18,7 @@ var game = { // a container for all relevant GAME information
         /*
         Here we store castle-related attributes
         */
-        hp: 0,
+        hp: 200,
         leftEdge: 800,
     },
     
@@ -27,7 +27,7 @@ var game = { // a container for all relevant GAME information
         This is our "scene"
         */
         element: null,
-        context: null,
+        context: null
     },
     
     elements: {
@@ -35,7 +35,7 @@ var game = { // a container for all relevant GAME information
         Here we'll store stuff that appears on top of the scene
         */
         enemies: [],
-        loot: null,
+        loot: 0,
         allies: []
     },
     
@@ -90,9 +90,11 @@ var game = { // a container for all relevant GAME information
         */
         game.canvas = document.querySelector("canvas"); //assign canvas
         game.canvas.context = game.canvas.getContext("2d"); //assign context
-        game.elements.enemies = [];
+        game.elements.enemies = []; //init array
         game.canvas.addEventListener("click", game.checkIfHit, false);
         game.player.weapon = new game.player.Weapon("Paper planes", 1); //give the player a starting weapon
+        game.load(); //check if there is data to load
+        game.save(); //this initializes the save keys
         game.gameLoop(); //initialize gameLoop
     },
     
@@ -115,13 +117,8 @@ var game = { // a container for all relevant GAME information
                 && mouseX > helper.x && mouseX < helper.x + helper.enemyWidth) {
                     
                 helper.hitPoints--;
-                game.playOuchSound();
             }
         });
-    },
-    
-    playOuchSound: function() {
-        document.getElementById("audio/ouch.wav").play();
     },
     
     spawnEnemy: function() {
@@ -160,6 +157,35 @@ var game = { // a container for all relevant GAME information
         }
     },
     
+    load: function () {
+        if (typeof localStorage["playerLoot"] === "undefined") { //if the key "playerLoot" is undefined,
+            return;                                             //there is no local storage to load, so we return
+        } else {
+            game.player.loot = parseInt(localStorage.getItem("playerLoot")); //if there is load data, we update key values
+            game.player.weapon = JSON.parse(localStorage.getItem("playerWeapon"));
+            game.player.kills = localStorage.getItem("playerKills");
+            //console.log("loaded"); //this was used for debugging
+        }
+    },
+    save: function () {
+        if (game.saveHelper.timer < 1000) { //setInterval didn't work, so I made my own function
+            game.saveHelper.timer++; //if timer is less than 1000, we increment by one and exit the function
+            return;
+        } else {
+            game.saveHelper.timer = 0; //if it's 1000 (or more) we reset the timer to 0 and continue
+        }
+        localStorage.setItem("playerLoot", parseInt(game.player.loot)); //save the information
+        localStorage.setItem("playerWeapon", JSON.stringify(game.player.weapon));
+        localStorage.setItem("playerKills", game.player.kills);
+        //console.log("saved"); //used for debugging
+    },
+    saveHelper: {
+        timer: 1000 //the first value we assign to the timer is 1000 so we immediately get a localStorage active.
+    },
+    reset: function () {
+        localStorage.clear(); //pretty self-explanatory
+    },
+    
     /*
     Animation routines from http://incremental.barriereader.co.uk/one.html?v=15
     */
@@ -173,7 +199,7 @@ var game = { // a container for all relevant GAME information
         stats.rows[1].cells[2].innerHTML = game.player.weapon.name;
         stats.rows[1].cells[3].innerHTML = game.player.weapon.damage;
         //table updated
-        
+        game.save();
         game.spawnEnemy();
         game.draw(); //call the canvas draw function
     },
