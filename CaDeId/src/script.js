@@ -212,9 +212,13 @@ var game = { // a container for all relevant GAME information
             } else {
                 var changeX = helper.getTarget(0) - helper.getStartLoc(0);
                 var changeY = helper.getTarget(1) - helper.getStartLoc(1);
-                var hypotenusa = Math.sqrt( changeX * changeX + changeY * changeY);
-                helper.location[0] += changeX * helper.speed / hypotenusa; //move the projectile x
-                helper.location[1] += changeY * helper.speed / hypotenusa; //move the projectile y
+                if (changeX === 0 && changeY === 0){
+                    //Do nothing
+                } else {
+                    var hypotenusa = Math.sqrt( changeX * changeX + changeY * changeY);
+                    helper.location[0] += changeX * helper.speed / hypotenusa; //move the projectile x
+                    helper.location[1] += changeY * helper.speed / hypotenusa; //move the projectile y
+                }
             }
         }
         game.checkIfHit();
