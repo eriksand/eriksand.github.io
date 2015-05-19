@@ -69,6 +69,8 @@ CaDeID is an attempt at synergizing the idle/incremental and defense genres of w
 
 * <html><a href="http://htmldog.com/guides/javascript/">HTMLDog</a></html> (Best tutorial)
 
+* [jQuery general info](http://pastebin.com/uSrszEg3)
+
 * <html><a href="http://www.codewars.com/">Codewars</a></html> (Ongoing challenges)
 
 * <html><a href="https://www.khanacademy.org/computing/computer-programming/html-css-js">Khan Academy</a></html> (Requires prior knowledge of JS)

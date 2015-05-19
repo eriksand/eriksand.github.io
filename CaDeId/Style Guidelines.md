@@ -20,7 +20,11 @@ In JavaScript we will be using whitespace. For example: we will write "var i = 0
 
 ### Naming conventions
 
-Name functions, variables, classes, and IDs descriptively. Use camelCase for naming.
+Name functions, variables, classes, and IDs descriptively. Use camelCase.
+
+### Misc.
+
+Code should be written in English and should be free from glaring typos.
 
 ### Examples
 
