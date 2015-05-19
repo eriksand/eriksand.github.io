@@ -267,7 +267,7 @@ var game = { // a container for all relevant GAME information
         //console.log("saved"); //used for debugging
     },
     drawAutosaveNotification: function () {
-        game.canvas.context.fillStyle = #FFFFFF;
+        game.canvas.context.fillStyle = "#FFFFFF";
         game.canvas.context.fillText("Game saved", 20, 20);
     },
     saveHelper: {
