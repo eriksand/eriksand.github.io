@@ -264,6 +264,7 @@ var game = { // a container for all relevant GAME information
         localStorage.setItem("playerLoot", parseInt(game.player.loot)); //save the information
         localStorage.setItem("playerWeapon", JSON.stringify(game.player.weapon));
         localStorage.setItem("playerKills", JSON.stringify(game.player.kills));
+        game.canvas.context.fillText("Hello world!", 10, 10);
         //console.log("saved"); //used for debugging
     },
     saveHelper: {
