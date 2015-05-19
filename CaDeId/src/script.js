@@ -268,7 +268,6 @@ var game = { // a container for all relevant GAME information
     },
     drawAutosaveNotification: function () {
         game.canvas.context.fillStyle = #FFFFFF;
-        game.canvas.context.font ="20px Courier";
         game.canvas.context.fillText("Game saved", 20, 20);
     },
     saveHelper: {
