@@ -267,9 +267,11 @@ var game = { // a container for all relevant GAME information
         //console.log("saved"); //used for debugging
     },
     drawAutosaveNotification: function () {
-        game.canvas.context.fillStyle = "#FFFFFF";
-        game.canvas.context.font ="20px Arial";
-        game.canvas.context.fillText("Game saved", 20, 20);
+        if (game.saveHelper.timer < 60) {
+            game.canvas.context.fillStyle = "#FFFFFF";
+            game.canvas.context.font ="15px Arial";
+            game.canvas.context.fillText("Game saved", 20, 30);
+        }
     },
     saveHelper: {
         timer: 1000 //the first value we assign to the timer is 1000 so we immediately get a localStorage active.
