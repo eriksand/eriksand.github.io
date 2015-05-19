@@ -131,7 +131,7 @@ var game = { // a container for all relevant GAME information
         game.canvas = document.querySelector("canvas"); //assign canvas
         game.canvas.context = game.canvas.getContext("2d"); //assign context
         game.elements.enemies = []; //init array
-        game.player.weapon = new game.Weapon("Paper planes", 1, 0.5); //give the player a starting weapon
+        game.player.weapon = new game.Weapon("Paper planes", 1, 5); //give the player a starting weapon
         game.canvas.addEventListener("click", game.readClick, false);
         game.load(); //check if there is data to load
         game.save(); //this initializes the save keys
