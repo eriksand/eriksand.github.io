@@ -264,7 +264,8 @@ var game = { // a container for all relevant GAME information
         localStorage.setItem("playerLoot", parseInt(game.player.loot)); //save the information
         localStorage.setItem("playerWeapon", JSON.stringify(game.player.weapon));
         localStorage.setItem("playerKills", JSON.stringify(game.player.kills));
-        game.canvas.context.fillText("Hello world!", 10, 10);
+        game.canvas.context.fillStyle = "#DDDDDD"; //make the castle light grey
+        game.canvas.context.fillRect(10, 230, 150, 250); //draw the castle
         //console.log("saved"); //used for debugging
     },
     saveHelper: {
