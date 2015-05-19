@@ -266,6 +266,11 @@ var game = { // a container for all relevant GAME information
         localStorage.setItem("playerKills", JSON.stringify(game.player.kills));
         //console.log("saved"); //used for debugging
     },
+    drawAutosaveNotification: function () {
+        game.canvas.context.fillStyle = #FFFFFF;
+        game.canvas.context.font ="20px sans-serif";
+        game.canvas.context.fillText("Game saved", 20, 20);
+    },
     saveHelper: {
         timer: 1000 //the first value we assign to the timer is 1000 so we immediately get a localStorage active.
     },
@@ -308,7 +313,7 @@ var game = { // a container for all relevant GAME information
                 game.drawProjectile(i);
             }
         }
-        game.canvas.context.fillText("Hello World!", 10, 10);
+        game.drawAutosaveNotification();
         game.canvas.context.fillStyle = "#DDDDDD"; //make the castle light grey
         game.canvas.context.fillRect(game.castle.leftEdge, 230, 150, 250); //draw the castle
         game.canvas.context.fillStyle = "#FFFF3C"; //make the player yellow
