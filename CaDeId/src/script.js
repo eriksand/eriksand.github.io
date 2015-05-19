@@ -210,8 +210,11 @@ var game = { // a container for all relevant GAME information
             if (helper.location[0] < 0 || helper.location[0] > 1000 || helper.location[1] < 0 || helper.location[1] > 500) {
                 game.elements.projectiles.splice(i, 1); //if the projectile is off screen - remove it from the array
             } else {
-                helper.location[0] += ((helper.getTarget(0) - helper.getStartLoc(0)) / 100) * helper.speed; //move the projectile x
-                helper.location[1] += ((helper.getTarget(1) - helper.getStartLoc(1)) / 100) * helper.speed; //move the projectile y
+                var changeX = helper.getTarget(0) - helper.getStartLoc(0);
+                var changeY = helper.getTarget(1) - helper.getStartLoc(1);
+                var hypotenusa = Math.sqrt( changeX * changeX + changeY * changeY);
+                helper.location[0] += changeX * helper.speed / hypotenusa; //move the projectile x
+                helper.location[1] += changeY * helper.speed / hypotenusa; //move the projectile y
             }
         }
         game.checkIfHit();
