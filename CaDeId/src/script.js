@@ -269,8 +269,8 @@ var game = { // a container for all relevant GAME information
     drawAutosaveNotification: function () {
         if (game.saveHelper.timer < 120) {
             game.canvas.context.fillStyle = "#FFFFFF";
-            game.canvas.context.font ="15px Helvetica Verdana sans-serif";
-            game.canvas.context.fillText("Game saved", 20, 30);
+            game.canvas.context.font ="15px serif";
+            game.canvas.context.fillText("Game saved", 450, 30);
         }
     },
     saveHelper: {
