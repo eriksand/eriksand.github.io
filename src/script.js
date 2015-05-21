@@ -56,10 +56,21 @@ var game = { // a container for all relevant GAME information
     /*
     FUNCTIONS
     */
-    Weapon: function(name, damage, speed) {
+    Weapon: function(name, damage, speed, rate) {
         this.name = name;
         this.damage = damage;
         this.speed = speed;
+        this.rate = rate;
+        this.timer = 1000; //no need for cooldown for first firing
+    },
+    
+    weaponCooldownHelper: function(weapon) {
+        if (weapon.timer >= 1000) {
+            weapon.timer = 0;
+            return true;
+        } else {
+            return false;
+        }
     },
     
     Projectile: function(target, weapon) {
@@ -131,7 +142,7 @@ var game = { // a container for all relevant GAME information
         game.canvas = document.querySelector("canvas"); //assign canvas
         game.canvas.context = game.canvas.getContext("2d"); //assign context
         game.elements.enemies = []; //init array
-        game.player.weapon = new game.Weapon("Paper planes", 1, 0.5); //give the player a starting weapon
+        game.player.weapon = new game.Weapon("Paper planes", 1, 3, 2); //give the player a starting weapon
         game.canvas.addEventListener("click", game.readClick, false);
         game.load(); //check if there is data to load
         game.save(); //this initializes the save keys
@@ -152,6 +163,9 @@ var game = { // a container for all relevant GAME information
         from the pageX we get the canvas' clicked x-coord.
         */
         var mouseY = event.pageY - game.canvas.offsetTop;
+        if (!game.weaponCooldownHelper(game.player.weapon)) {
+            return; //if cooldown is not done, we don't spawn a new particle
+        }
         var helper = new game.Projectile([mouseX, mouseY], game.player.weapon); //create a new projectile
         game.elements.projectiles.push(helper); //add it to the array of projectiles
         
@@ -210,8 +224,17 @@ var game = { // a container for all relevant GAME information
             if (helper.location[0] < 0 || helper.location[0] > 1000 || helper.location[1] < 0 || helper.location[1] > 500) {
                 game.elements.projectiles.splice(i, 1); //if the projectile is off screen - remove it from the array
             } else {
-                helper.location[0] += ((helper.getTarget(0) - helper.getStartLoc(0)) / 100) * helper.speed; //move the projectile x
-                helper.location[1] += ((helper.getTarget(1) - helper.getStartLoc(1)) / 100) * helper.speed; //move the projectile y
+                // Pythagoras all the way! Can't really put this in to words that easily
+                var changeX = helper.getTarget(0) - helper.getStartLoc(0);
+                var changeY = helper.getTarget(1) - helper.getStartLoc(1);
+                if (changeX === 0 && changeY === 0){
+                    //Do nothing
+                } else {
+                    var hypotenusa = Math.sqrt( changeX * changeX + changeY * changeY);
+                    helper.location[0] += changeX * helper.speed / hypotenusa; //move the projectile x
+                    helper.location[1] += changeY * helper.speed / hypotenusa; //move the projectile y
+                }
+                
             }
         }
         game.checkIfHit();
@@ -238,13 +261,13 @@ var game = { // a container for all relevant GAME information
     },
     
     load: function () {
-        if (typeof localStorage["playerLoot"] === "undefined") { //if the key "playerLoot" is undefined,
+        if (typeof localStorage["playerLoot"] === "undefined" || typeof JSON.parse(localStorage.getItem("playerWeapon")).timer === "undefined") { //if the key "playerLoot" is undefined,
             return;                                             //there is no local storage to load, so we return
         } else {
             game.player.loot = parseInt(localStorage.getItem("playerLoot")); //if there is load data, we update key values
             game.player.weapon = JSON.parse(localStorage.getItem("playerWeapon"));
             game.player.kills = JSON.parse(localStorage.getItem("playerKills"));
-            //console.log("loaded"); //this was used for debugging
+            console.log("loaded"); //this was used for debugging
         }
     },
     save: function () {
@@ -257,10 +280,17 @@ var game = { // a container for all relevant GAME information
         localStorage.setItem("playerLoot", parseInt(game.player.loot)); //save the information
         localStorage.setItem("playerWeapon", JSON.stringify(game.player.weapon));
         localStorage.setItem("playerKills", JSON.stringify(game.player.kills));
-        //console.log("saved"); //used for debugging
+        console.log("saved"); //used for debugging
     },
     saveHelper: {
         timer: 1000 //the first value we assign to the timer is 1000 so we immediately get a localStorage active.
+    },
+    drawAutosaveNotification: function () {
+        if (game.saveHelper.timer < 120) {
+            game.canvas.context.fillStyle = "#FFFFFF";
+            game.canvas.context.font ="15px serif";
+            game.canvas.context.fillText("- GAME SAVED -", 450, 30);
+        }
     },
     reset: function () {
         localStorage.clear(); //pretty self-explanatory
@@ -284,6 +314,7 @@ var game = { // a container for all relevant GAME information
         game.save();
         game.spawnEnemy();
         game.calculateProjectileProperties();
+        game.player.weapon.timer += ((game.player.weapon.rate * 1000) / 60); //cool down the player's weapon each tick
         game.draw(); //call the canvas draw function
     },
     draw: function() { //this is where we will draw all the information for the game!
@@ -301,6 +332,7 @@ var game = { // a container for all relevant GAME information
                 game.drawProjectile(i);
             }
         }
+        game.drawAutosaveNotification();
         game.canvas.context.fillStyle = "#DDDDDD"; //make the castle light grey
         game.canvas.context.fillRect(game.castle.leftEdge, 230, 150, 250); //draw the castle
         game.canvas.context.fillStyle = "#FFFF3C"; //make the player yellow

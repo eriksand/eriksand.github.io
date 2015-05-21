@@ -1,59 +1,23 @@
+
+/*
+Disable text highlighting
+*/
 body {
-    font-family: Helvetica, Verdana, sans-serif;
-    color: #EEEEEE;
-    margin: 0 0 0 10px;
-    padding: 0;
-    border: 0;
-    background-color: #666666;
+    color: #888888;
+    font-family: Helvetica, sans-serif;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-header {
-    width: 1000px;
+canvas {
+    background-image: url("img/background_small.png");
+    background-repeat: no-repeat;
 }
-    header h1 {
-        width: 400px;
-        background-color: #333333;
-        color: #EEEEEE;
-        padding: 15px 5px 0px 5px;
-        border-radius: 8px;
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
-        margin: 40px 0 0 0;
-        border: 2px solid orange;
-        border-bottom: 0;
-    }
-    
-    header nav ul {
-        height: 40px;
-        line-height: 30px;
-        background-color: #333333;
-        list-style-type: none;
-        border-radius: 5px;
-        border-top-left-radius: 0;
-        width: 600px;
-        margin: 0 0 0 0;
-        border: 2px solid orange;
-    }
-        header nav ul li {
-            float: left;
-            display: inline;
-        }
-        
-            header nav ul li a {
-                color: #FFFFFF;
-                display: inline-block;
-                padding: 5px 40px;
-                text-decoration: none;
-            }
 
-            header nav ul li a:hover {
-                background-color: orange;
-                color: black;
-            }
-    
-article {
-    margin: 40px auto auto 20px;
-}
-article.hidden {
-    display: none;
+td {
+    text-align: center;
 }
