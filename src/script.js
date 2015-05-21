@@ -142,7 +142,11 @@ var game = { // a container for all relevant GAME information
         game.canvas = document.querySelector("canvas"); //assign canvas
         game.canvas.context = game.canvas.getContext("2d"); //assign context
         game.elements.enemies = []; //init array
+<<<<<<< HEAD:src/script.js
         game.player.weapon = new game.Weapon("Paper planes", 1, 3, 2); //give the player a starting weapon
+=======
+        game.player.weapon = new game.Weapon("Paper planes", 1, 5); //give the player a starting weapon
+>>>>>>> origin/master:CaDeId/src/script.js
         game.canvas.addEventListener("click", game.readClick, false);
         game.load(); //check if there is data to load
         game.save(); //this initializes the save keys
@@ -224,7 +228,10 @@ var game = { // a container for all relevant GAME information
             if (helper.location[0] < 0 || helper.location[0] > 1000 || helper.location[1] < 0 || helper.location[1] > 500) {
                 game.elements.projectiles.splice(i, 1); //if the projectile is off screen - remove it from the array
             } else {
+<<<<<<< HEAD:src/script.js
                 // Pythagoras all the way! Can't really put this in to words that easily
+=======
+>>>>>>> origin/master:CaDeId/src/script.js
                 var changeX = helper.getTarget(0) - helper.getStartLoc(0);
                 var changeY = helper.getTarget(1) - helper.getStartLoc(1);
                 if (changeX === 0 && changeY === 0){
@@ -234,7 +241,10 @@ var game = { // a container for all relevant GAME information
                     helper.location[0] += changeX * helper.speed / hypotenusa; //move the projectile x
                     helper.location[1] += changeY * helper.speed / hypotenusa; //move the projectile y
                 }
+<<<<<<< HEAD:src/script.js
                 
+=======
+>>>>>>> origin/master:CaDeId/src/script.js
             }
         }
         game.checkIfHit();
@@ -281,6 +291,13 @@ var game = { // a container for all relevant GAME information
         localStorage.setItem("playerWeapon", JSON.stringify(game.player.weapon));
         localStorage.setItem("playerKills", JSON.stringify(game.player.kills));
         console.log("saved"); //used for debugging
+    },
+    drawAutosaveNotification: function () {
+        if (game.saveHelper.timer < 120) {
+            game.canvas.context.fillStyle = "#FFFFFF";
+            game.canvas.context.font ="15px serif";
+            game.canvas.context.fillText("Game saved", 450, 30);
+        }
     },
     saveHelper: {
         timer: 1000 //the first value we assign to the timer is 1000 so we immediately get a localStorage active.
