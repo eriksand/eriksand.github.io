@@ -73,14 +73,14 @@ var game = { // a container for all relevant GAME information
         }
     },
     
-    Projectile: function(target, weapon) {
+    Projectile: function(target, weapon, weaponHolder) {
         /*
         target = mouseX and mouseY
         weapon is used to determine damage and projectile speed
         */
         this.target = target;
         this.speed = weapon.speed;
-        this.startLoc = [game.player.x, game.player.y]; //set the origin of the projectile
+        this.startLoc = [weaponHolder.x, weaponHolder.y]; //set the origin of the projectile
         this.location = this.startLoc.slice(0); //set the first location of the projectile to origin
         this.rgb = "#FFFFFF"; //white. Paper planes, dude.
         
@@ -133,6 +133,8 @@ var game = { // a container for all relevant GAME information
         this.name = name;
         this.dmg = dmg;
         this.price = price;
+        x = 830;
+        y = 200;
     },
     
     init: function() {
@@ -166,7 +168,7 @@ var game = { // a container for all relevant GAME information
         if (!game.weaponCooldownHelper(game.player.weapon)) {
             return; //if cooldown is not done, we don't spawn a new particle
         }
-        var helper = new game.Projectile([mouseX, mouseY], game.player.weapon); //create a new projectile
+        var helper = new game.Projectile([mouseX, mouseY], game.player.weapon, game.player); //create a new projectile
         game.elements.projectiles.push(helper); //add it to the array of projectiles
         
     },
