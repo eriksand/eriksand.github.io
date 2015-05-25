@@ -143,7 +143,7 @@ var game = { // a container for all relevant GAME information
     */
     updateAllyAI: function() {
         for (i = 0; i < game.elements.allies.length; i++) {
-            if (!game.weaponCooldownHelper(game.game.elements.allies[i].weapon)) {
+            if (!game.weaponCooldownHelper(game.elements.allies[i].weapon)) {
             return; //if cooldown is not done, we don't spawn a new particle
             }
         var helper = new game.Projectile([200, 400], game.game.elements.allies[i].weapon, game.game.elements.allies[i]); //create a new projectile
