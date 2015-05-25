@@ -161,7 +161,7 @@ var game = { // a container for all relevant GAME information
                     targetHelper = game.elements.enemies[i];
                 }
             }
-            if (!game.elements.enemies.length === 0) { //if there are no enemies, do nothing
+            if (!(game.elements.enemies.length === 0)) { //if there are no enemies, do nothing
                 var helper = new game.Projectile([targetHelper.x, targetHelper.y], allyHelper.weapon, allyHelper); //create a new projectile
                 game.elements.projectiles.push(helper); //add it to the array of projectiles
             }
