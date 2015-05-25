@@ -145,12 +145,12 @@ var game = { // a container for all relevant GAME information
         for (i = 0; i < game.elements.allies.length; i++) {
             var allyHelper = game.elements.allies[i];
             if (!game.weaponCooldownHelper(allyHelper.weapon)) {
+            allyHelper.weapon.timer += ((allyHelper.weapon.rate * 1000) / 60); //cool down the player's weapon each tick
             return; //if cooldown is not done, we don't spawn a new particle
             }
         var helper = new game.Projectile([200, 400], allyHelper.weapon, allyHelper); //create a new projectile
         game.elements.projectiles.push(helper); //add it to the array of projectiles
         }
-        allyHelper.weapon.timer += ((allyHelper.weapon.rate * 1000) / 60); //cool down the player's weapon each tick
     },
     drawAllies: function() {
         for (i = 0; i < game.elements.allies.length; i++) {
