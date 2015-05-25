@@ -73,14 +73,14 @@ var game = { // a container for all relevant GAME information
         }
     },
     
-    Projectile: function(target, weapon, weaponHolder) {
+    Projectile: function(target, weapon, origin) {
         /*
         target = mouseX and mouseY
         weapon is used to determine damage and projectile speed
         */
         this.target = target;
         this.speed = weapon.speed;
-        this.startLoc = [weaponHolder.x, weaponHolder.y]; //set the origin of the projectile
+        this.startLoc = [origin.x, origin.y]; //set the origin of the projectile
         this.location = this.startLoc.slice(0); //set the first location of the projectile to origin
         this.rgb = "#FFFFFF"; //white. Paper planes, dude.
         
