@@ -141,15 +141,19 @@ var game = { // a container for all relevant GAME information
     @Erkki trying to create some AllyAI and Ally properties.
     I don't know how to organize it all. But I'll put some AI here.
     */
-    AllyAI: function() {
+    updateAllyAI: function() {
         for (i = 0; i < game.elements.allies.length; i++) {
-            
+            if (!game.weaponCooldownHelper(game.game.elements.allies[i].weapon)) {
+            return; //if cooldown is not done, we don't spawn a new particle
+            }
+        var helper = new game.Projectile([200, 400], game.game.elements.allies[i].weapon, game.game.elements.allies[i]); //create a new projectile
+        game.elements.projectiles.push(helper); //add it to the array of projectiles
         }
     },
     drawAllies: function() {
         for (i = 0; i < game.elements.allies.length; i++) {
             game.canvas.context.fillStyle = "#FE2EC8";
-            game.canvas.context.fillRect( game.elements.allies[i].x , game.elements.allies[i].x, 10, 10 );
+            game.canvas.context.fillRect( game.elements.allies[i].x , game.elements.allies[i].y, 10, 10 );
         }
     },
     
@@ -336,6 +340,7 @@ var game = { // a container for all relevant GAME information
         //table updated
         game.save();
         game.spawnEnemy();
+        game.updateAllyAI();
         game.calculateProjectileProperties();
         game.player.weapon.timer += ((game.player.weapon.rate * 1000) / 60); //cool down the player's weapon each tick
         game.draw(); //call the canvas draw function
