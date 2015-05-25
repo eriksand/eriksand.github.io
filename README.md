@@ -4,17 +4,17 @@ CaDeID is an attempt at synergizing the idle/incremental and defense genres of w
 
 ### Inspirational links
 
-* <html><a href="http://www.stickpage.com/defendyourcastleplay.shtml">Defend your Castle</a></html>
+[Defend your Castle](http://www.stickpage.com/defendyourcastleplay.shtml)
 
-* <html><a href="http://www.kongregate.com/games/noanoa/elona-shooter?acomplete=elona">Elona Shooter</a></html>
+[Elona Shooter](http://www.kongregate.com/games/noanoa/elona-shooter?acomplete=elona)
 
-* <html><a href="http://www.kongregate.com/games/Ivory/storm-the-house-3?acomplete=house">Storm the House</a></html>
+[Storm the House](http://www.kongregate.com/games/Ivory/storm-the-house-3?acomplete=house)
 
-* <html><a href="http://www.kongregate.com/games/light_bringer777/learn-to-fly-idle">Learn to Fly Idle</a></html>
+[Learn to Fly Idle](http://www.kongregate.com/games/light_bringer777/learn-to-fly-idle)
 
-* <html><a href="http://www.kongregate.com/games/lobstershow/stick-hero-idle-2">Stick Hero Idle 2</a></html>
+[Stick Hero Idle 2](http://www.kongregate.com/games/lobstershow/stick-hero-idle-2)
 
-* <html><a href="http://www.stickpage.com/dd4gameplay.shtml">Demonic Defense 4</a></html>
+[Demonic Defense 4](http://www.stickpage.com/dd4gameplay.shtml)
 
 ### Recommended Tools
 
@@ -22,62 +22,62 @@ CaDeID is an attempt at synergizing the idle/incremental and defense genres of w
 
 * If Windows
 
-  * <html><a href="http://notepad-plus-plus.org/">Notepad++</a></html>
+[Notepad++](http://notepad-plus-plus.org/)
 
-  * <html><a href="https://windows.github.com/">Github for Windows </a><a href="https://help.github.com/articles/getting-started-with-github-for-windows/">(tutorial)</a></html>
+[Github for Windows](https://windows.github.com/) [*tutorial*](https://help.github.com/articles/getting-started-with-github-for-windows/)
 
 * If OSX
 
-  * <html><a href="http://www.sublimetext.com/">Sublime text</a></html>
+[Sublime text](http://www.sublimetext.com/)
   
-  * <html><a href="https://mac.github.com/">Github for Mac </a><a href="https://mac.github.com/help.html">(tutorial)</a></html>
+[Github for Mac](https://mac.github.com/) [*tutorial*](https://mac.github.com/help.html)
   
-* [Codepen.io](http://codepen.io/pen/) is a great tool for showing off your ideas about HTML/CSS/JS. Use it to give a concrete idea of your concept.
+[Codepen.io](http://codepen.io/pen/) is a great tool for showing off your ideas about HTML/CSS/JS. Use it to give a concrete idea of your concept.
 
 ### Relevant tutorials and documentation
 *(in order of recommendation)*
 
 *Recommended order - HTMLDog HTML -> CSS -> JS -> Atlassian git -> try.github.io -> Codewars*
 
-* <html><a href="https://help.github.com/articles/markdown-basics/">Markdown</a></html>
+[Markdown](https://help.github.com/articles/markdown-basics/)
 
-* [Markdown beginners tutorial](http://markdowntutorial.com/)
+[Markdown beginners tutorial](http://markdowntutorial.com/)
 
 **GIT(hub)**
 
-* <html><a href="https://www.atlassian.com/git/tutorials/">Atlassian (git)</a></html>
+[Atlassian *git*](https://www.atlassian.com/git/tutorials/)
 
-* <html><a href="https://try.github.io/levels/1/challenges/1">try.github.io (git and github)</a></html>
+[git and github](https://try.github.io/levels/1/challenges/1)
 
-* <html><a href="http://rogerdudler.github.io/git-guide/">rogerdudler (git)</a></html>
+[rogerdudler *git*](http://rogerdudler.github.io/git-guide/)
 
 **HTML & CSS**
 
-* HTMLDog <html><a href="http://htmldog.com/guides/html/">(HTML)</a> <a href="http://htmldog.com/guides/css/">(CSS)</a></html>
+[Mozilla](https://developer.mozilla.org/en-US/Learn/HTML)
 
-* Mozilla <html><a href="https://developer.mozilla.org/en-US/Learn/HTML">(HTML)</a> <a href="https://developer.mozilla.org/en-US/Learn/CSS">(CSS)</a></html>
+[HTMLDog](http://htmldog.com/guides/html/)
 
-* <html><a href="https://www.khanacademy.org/computing/computer-programming/html-css">Khan Academy</a></href>
+[Khan Academy](https://www.khanacademy.org/computing/computer-programming/html-css)
 
-* <html><a href="http://www.w3schools.com/html/">W3Schools (beginner)</a></html>
+[W3Schools *beginner*](http://www.w3schools.com/html/)
 
-* <html><a href="http://www.codecademy.com/en/tracks/web">Codecademy</a></html>
+[Codecademy](http://www.codecademy.com/en/tracks/web)
 
 **JavaScript**
 
-* <html><a href="https://developer.mozilla.org/en-US/Learn/JavaScript">Mozilla</a></html> (Official documentation)
+[Official documentation](https://developer.mozilla.org/en-US/Learn/JavaScript)
 
-* <html><a href="http://htmldog.com/guides/javascript/">HTMLDog</a></html> (Best tutorial)
+[Best tutorial](http://htmldog.com/guides/javascript/)
 
-* [jQuery general info](http://pastebin.com/uSrszEg3)
+[jQuery general info](http://pastebin.com/uSrszEg3)
 
-* <html><a href="http://www.codewars.com/">Codewars</a></html> (Ongoing challenges)
+[Codewars for ongoing changes](http://www.codewars.com)
 
-* <html><a href="https://www.khanacademy.org/computing/computer-programming/html-css-js">Khan Academy</a></html> (Requires prior knowledge of JS)
+[Khan Academy requires knowledge of js](https://www.khanacademy.org/computing/computer-programming/html-css-js)
 
-* <html><a href="http://www.codecademy.com/en/tracks/javascript">Codecademy</a></html>
+[Codecademy](http://www.codecademy.com/en/tracks/javascript)
 
-* <html><a href="https://www.khanacademy.org/computing/computer-programming/programming">Khan Academy (beginner)</a></html> (Kind of a tangent, if you feel like learning JS libraries and fringe animations this may be good. Do the others first.)
+[Khan Academy *beginner*](https://www.khanacademy.org/computing/computer-programming/programming)
 
 ### Quick and dirty Github for Windows tutorial
 
