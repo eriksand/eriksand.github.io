@@ -126,15 +126,31 @@ var game = { // a container for all relevant GAME information
         
     },
     
-    Ally: function(name, dmg, price) {
+    Ally: function(name, dmg, price, weapon, x, y) {
         /*
         Store attributes related to allies
         */
         this.name = name;
         this.dmg = dmg;
         this.price = price;
-        x = 830;
-        y = 200;
+        this.weapon = weapon;
+        this.x = x;
+        this.y = y;
+    },
+    /*
+    @Erkki trying to create some AllyAI and Ally properties.
+    I don't know how to organize it all. But I'll put some AI here.
+    */
+    AllyAI: function() {
+        for (i = 0; i < game.elements.allies.length; i++) {
+            
+        }
+    },
+    drawAllies: function() {
+        for (i = 0; i < game.elements.allies.length; i++) {
+            game.canvas.context.fillStyle = "#FE2EC8";
+            game.canvas.context.fillRect( game.elements.allies[i].x , game.elements.allies[i].x, 10, 10 );
+        }
     },
     
     init: function() {
@@ -144,6 +160,10 @@ var game = { // a container for all relevant GAME information
         game.canvas = document.querySelector("canvas"); //assign canvas
         game.canvas.context = game.canvas.getContext("2d"); //assign context
         game.elements.enemies = []; //init array
+        //@Erkki init new Ally, maybe not the best way
+        var allyWeaponHelper = new game.Weapon("Paper planes", 1, 3, 2);
+        var allyHelper = new game.Ally("Lasse", 1, 500, allyWeaponHelper, 830, 200);
+        game.elements.allies.push(allyHelper);// @Erkki lade till Lasse och koordinater 830, 200
         game.player.weapon = new game.Weapon("Paper planes", 1, 3, 2); //give the player a starting weapon
         game.canvas.addEventListener("click", game.readClick, false);
         game.load(); //check if there is data to load
@@ -334,11 +354,13 @@ var game = { // a container for all relevant GAME information
                 game.drawProjectile(i);
             }
         }
+        game.drawAllies(); //Draw allies
         game.drawAutosaveNotification();
         game.canvas.context.fillStyle = "#DDDDDD"; //make the castle light grey
         game.canvas.context.fillRect(game.castle.leftEdge, 230, 150, 250); //draw the castle
         game.canvas.context.fillStyle = "#FFFF3C"; //make the player yellow
         game.canvas.context.fillRect(game.player.x, game.player.y, 20, 20);
+        
         game.gameLoop(); //re-iterate back to gameloop
     },
     gameLoop: function() { //the gameloop function
