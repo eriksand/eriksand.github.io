@@ -148,7 +148,20 @@ var game = { // a container for all relevant GAME information
             allyHelper.weapon.timer += ((allyHelper.weapon.rate * 1000) / 60); //cool down the player's weapon each tick
             return; //if cooldown is not done, we don't spawn a new particle
             }
-        var helper = new game.Projectile([200, 400], allyHelper.weapon, allyHelper); //create a new projectile
+        var targetHelper = null; //Get the target that the ally is aiming for
+        //Go through all the enemies and find the one closest to the castle
+        //That is the one with the biggest x-coord
+        for (i = 0; i < game.elements.enemies.length; i++) {
+            // At first the target is the first enemy in the array
+            if (targetHelper === null) {
+                targetHelper = game.elements.enemies[i];
+            } else if (game.elements.enemies[i].x > targetHelper.x) {
+                //if the x of the enemy this for-loop is currently looking at is
+                //"larger" than the current targetHelper, make it the new target
+                targetHelper = game.elements.enemies[i];
+            }
+        }
+        var helper = new game.Projectile([targetHelper.x, targetHelper.y], allyHelper.weapon, allyHelper); //create a new projectile
         game.elements.projectiles.push(helper); //add it to the array of projectiles
         }
     },
