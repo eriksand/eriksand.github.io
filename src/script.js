@@ -143,12 +143,14 @@ var game = { // a container for all relevant GAME information
     */
     updateAllyAI: function() {
         for (i = 0; i < game.elements.allies.length; i++) {
-            if (!game.weaponCooldownHelper(game.elements.allies[i].weapon)) {
+            var allyHelper = game.elements.allies[i];
+            if (!game.weaponCooldownHelper(allyHelper.weapon)) {
             return; //if cooldown is not done, we don't spawn a new particle
             }
-        var helper = new game.Projectile([200, 400], game.elements.allies[i].weapon, game.elements.allies[i]); //create a new projectile
+        var helper = new game.Projectile([200, 400], allyHelper.weapon, allyHelper); //create a new projectile
         game.elements.projectiles.push(helper); //add it to the array of projectiles
         }
+        allyHelper.weapon.timer += ((allyHelper.weapon.rate * 1000) / 60); //cool down the player's weapon each tick
     },
     drawAllies: function() {
         for (i = 0; i < game.elements.allies.length; i++) {
@@ -164,11 +166,12 @@ var game = { // a container for all relevant GAME information
         game.canvas = document.querySelector("canvas"); //assign canvas
         game.canvas.context = game.canvas.getContext("2d"); //assign context
         game.elements.enemies = []; //init array
-        //@Erkki init new Ally, maybe not the best way
+        //@Erkki init new Ally, maybe not the best way. Could add function addAlly();
         game.elements.allies = []; //init array?
         var allyWeaponHelper = new game.Weapon("Paper planes", 1, 3, 2);
         var allyHelper = new game.Ally("Lasse", 1, 500, allyWeaponHelper, 200, 100);
-        game.elements.allies.push(allyHelper);// @Erkki lade till Lasse och koordinater 200, 100
+        game.elements.allies.push(allyHelper);// @Erkki added ally "Lasse" and coordinates 200, 100
+        
         game.player.weapon = new game.Weapon("Paper planes", 1, 3, 2); //give the player a starting weapon
         game.canvas.addEventListener("click", game.readClick, false);
         game.load(); //check if there is data to load
