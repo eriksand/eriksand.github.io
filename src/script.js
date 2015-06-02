@@ -331,7 +331,7 @@ var game = { // a container
         } else { // set default background
             var imago = new Image();
             imago.onload = function () {
-                document.getElementById("canvas").style.backgroundImage = imago;
+                game.canvas.context.drawImage(imago, 0, 0);
                 alert ("loaded");
             }
             imago.src = "../img/background_small.png";
@@ -353,9 +353,9 @@ var game = { // a container
         /*
         Initialize the game
         */
-        game.setBackground();
         game.canvas = document.querySelector("canvas"); //assign canvas
         game.canvas.context = game.canvas.getContext("2d"); //assign context
+        game.setBackground();
         game.elements.enemies = []; //init array
         game.elements.allies = [];
         //var allyWeaponHelper = new game.Weapon("Paper planes", 1, 3, 2);
