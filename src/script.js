@@ -515,6 +515,12 @@ window.requestAnimFrame = (function(){
         };
 }());
 
-window.onload = game.setBackground();
-game.init();
+window.onload = initBackground();
+initBackground function() {
+    var backgroundImage = new Image();
+    backgroundImage.onload = game.init();
+    backgroundImage.src = "url('../img/background_small.png') no-repeat";
+    document.getElementById("canvas").style.background = backgroundImage;
+}
+
 
