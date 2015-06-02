@@ -329,8 +329,12 @@ var game = { // a container
         } else if (backgroundId === 1 || backgroundId === "duck") { //set the duck-background
             document.getElementById("canvas").style.background = "url('../img/background_duck.png') no-repeat";
         } else { // set default background
-            document.getElementById("canvas").onload = function () {alert ("loaded");}
-            document.getElementById("canvas").style.background = "url('../img/background_small.png') no-repeat";
+            var imago = new Image();
+            imago.onload = function () {
+                document.getElementById("canvas").style.background = imago;
+                alert ("loaded");
+            }
+            imago.src = "url('../img/background_small.png')";
         }
     },
     
