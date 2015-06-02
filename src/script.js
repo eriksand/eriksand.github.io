@@ -323,10 +323,6 @@ var game = { // a container
         }
     },
     */
-    initBackground: function() {
-        game.setBackground();
-        document.getElementById("canvas").onload = return;
-    }
     setBackground: function(backgroundId) {
         if (backgroundId === 0 || backgroundId === "day") { // set default background
             document.getElementById("canvas").style.background = "url('../img/background_small.png') no-repeat";
@@ -519,6 +515,6 @@ window.requestAnimFrame = (function(){
         };
 }());
 
-window.onload = game.initBackground();
+window.onload = game.setBackground();
 game.init();
 
