@@ -516,11 +516,11 @@ window.requestAnimFrame = (function(){
 }());
 
 window.onload = initBackground();
-initBackground function() {
+function initBackground () {
     var backgroundImage = new Image();
     backgroundImage.onload = game.init();
     backgroundImage.src = "url('../img/background_small.png') no-repeat";
     document.getElementById("canvas").style.background = backgroundImage;
-};
+}
 
 
