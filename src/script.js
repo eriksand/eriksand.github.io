@@ -1,17 +1,35 @@
-var game = { // a container for all relevant GAME information
+var game = { // a container
+    /*
+      #################
+      ##  GAME DATA  ##
+      #################
+    */
+    
+    version: 0.2,
+    
+    saveState: {
+        /*
+        Here we'll store a copy of essential game information
+        */
+        settings: null,
+        player: null,
+        castle: null,
+        allies: null,
+        version: null
+    },
 
-    //date: null, //fps check
-
-    sounds: {
-        soundsOn: 1, //initial value = 1 = true
-        toggle: function() {
-            var helper = document.getElementsByTagName("button");
-            if (game.sounds.soundsOn) { //if true
-                game.sounds.soundsOn = 0; //set to false
-                helper[0].innerHTML = "Turn sounds on";
-            } else {
-                game.sounds.soundsOn = 1; //set to true
-                helper[0].innerHTML = "Turn sounds off";
+    settings: {
+        sounds: {
+            soundsOn: 1, //initial value = 1 = true
+            toggle: function() {
+                var helper = document.getElementsByTagName("button");
+                if (game.settings.sounds.soundsOn) { //if true
+                    game.settings.sounds.soundsOn = 0; //set to false
+                    helper[0].innerHTML = "Turn sounds on";
+                } else {
+                    game.settings.sounds.soundsOn = 1; //set to true
+                    helper[0].innerHTML = "Turn sounds off";
+                }
             }
         }
     },
@@ -35,14 +53,6 @@ var game = { // a container for all relevant GAME information
         leftEdge: 800,
     },
     
-    canvas: {
-        /*
-        This is our "scene"
-        */
-        element: null,
-        context: null
-    },
-    
     elements: {
         /*
         Here we'll store stuff that appears on top of the scene
@@ -53,9 +63,24 @@ var game = { // a container for all relevant GAME information
         projectiles: []
     },
     
+    canvas: {
+        /*
+        This is our "scene"
+        */
+        element: null,
+        context: null
+    },
+    
+    
+    
+    
+    
     /*
-    FUNCTIONS
+       ##################
+       ## CONSTRUCTORS ##
+       ##################
     */
+    
     Weapon: function(name, damage, speed, rate) {
         this.name = name;
         this.damage = damage;
@@ -84,12 +109,6 @@ var game = { // a container for all relevant GAME information
         this.location = this.startLoc.slice(0); //set the first location of the projectile to origin
         this.rgb = "#FFFFFF"; //white. Paper planes, dude.
         
-        this.getTarget = function(index) {
-            return this.target[index]; //unnecessary, legacy code from fixed bug
-        }
-        this.getStartLoc = function(index) {
-            return this.startLoc[index]; //unnecessary, legacy code from fixed bug
-        }
     },
     
     
@@ -137,10 +156,52 @@ var game = { // a container for all relevant GAME information
         this.x = x;
         this.y = y;
     },
+    
+    
+    
+    
+    
     /*
-    @Erkki trying to create some AllyAI and Ally properties.
-    I don't know how to organize it all. But I'll put some AI here.
+      ####################
+      ## CORE FUNCTIONS ##
+      ####################
     */
+    
+    readClick: function() {
+        /*
+        This function checks if a player's click hits an enemy element
+        */
+        var mouseX = event.pageX - game.canvas.offsetLeft;
+        /*
+        event.pageX returns the distance from the left edge of the browser window
+        in pixels. canvas.offsetLeft returns the distance between the left edge of
+        the canvas and the left edge of the browser window. By subtracting the offset
+        from the pageX we get the canvas' clicked x-coord.
+        */
+        var mouseY = event.pageY - game.canvas.offsetTop;
+        if (!game.weaponCooldownHelper(game.player.weapon)) {
+            return; //if cooldown is not done, we don't spawn a new particle
+        }
+        var helper = new game.Projectile([mouseX, mouseY], game.player.weapon, game.player); //create a new projectile
+        game.elements.projectiles.push(helper); //add it to the array of projectiles
+    },
+    
+    checkIfHit: function() {
+        for (var i = (game.elements.enemies.length - 1); i >= 0; i--) { //iterate from end of array to get "topmost" elements first
+            var enemyHelper = game.elements.enemies[i];
+            for (var a = 0; a < game.elements.projectiles.length; a++) { //for each projectile
+                var projectileHelper = game.elements.projectiles[a];
+                if (projectileHelper.location[1] > enemyHelper.y && projectileHelper.location[1] < enemyHelper.y + enemyHelper.enemyHeight 
+                && projectileHelper.location[0] > enemyHelper.x && projectileHelper.location[0] < enemyHelper.x + enemyHelper.enemyWidth) {
+                    enemyHelper.hitPoints--;
+                    game.elements.projectiles.splice(a, 1); //remove projectile if it hits something
+                    game.playOuchSound();
+                    continue;
+                }
+            }
+        }
+    },
+    
     updateAllyAI: function() {
         for (i = 0; i < game.elements.allies.length; i++) {
             var allyHelper = game.elements.allies[i];
@@ -169,63 +230,6 @@ var game = { // a container for all relevant GAME information
         }
     },
     
-    drawAllies: function() {
-        for (i = 0; i < game.elements.allies.length; i++) {
-            game.canvas.context.fillStyle = "#FE2EC8";
-            game.canvas.context.fillRect( game.elements.allies[i].x , game.elements.allies[i].y, 10, 10 );
-        }
-    },
-    
-    init: function() {
-        /*
-        Initialize the game
-        */
-        game.canvas = document.querySelector("canvas"); //assign canvas
-        game.canvas.context = game.canvas.getContext("2d"); //assign context
-        game.elements.enemies = []; //init array
-        //@Erkki init new Ally, maybe not the best way. Could add function addAlly();
-        game.elements.allies = []; //init array?
-        var allyWeaponHelper = new game.Weapon("Paper planes", 1, 3, 2);
-        var allyHelper = new game.Ally("Lasse", 1, 500, allyWeaponHelper, 200, 100);
-        game.elements.allies.push(allyHelper);// @Erkki added ally "Lasse" and coordinates 200, 100
-        
-        game.player.weapon = new game.Weapon("Paper planes", 1, 3, 2); //give the player a starting weapon
-        game.canvas.addEventListener("click", game.readClick, false);
-        game.load(); //check if there is data to load
-        game.save(); //this initializes the save keys
-        //game.date = new Date; //fps loop
-        game.gameLoop(); //initialize gameLoop
-        
-    },
-    
-    readClick: function() {
-        /*
-        This function checks if a player's click hits an enemy element
-        */
-        var mouseX = event.pageX - game.canvas.offsetLeft;
-        /*
-        event.pageX returns the distance from the left edge of the browser window
-        in pixels. canvas.offsetLeft returns the distance between the left edge of
-        the canvas and the left edge of the browser window. By subtracting the offset
-        from the pageX we get the canvas' clicked x-coord.
-        */
-        var mouseY = event.pageY - game.canvas.offsetTop;
-        if (!game.weaponCooldownHelper(game.player.weapon)) {
-            return; //if cooldown is not done, we don't spawn a new particle
-        }
-        var helper = new game.Projectile([mouseX, mouseY], game.player.weapon, game.player); //create a new projectile
-        game.elements.projectiles.push(helper); //add it to the array of projectiles
-        
-    },
-    
-    // Play the audio file ouch.wav, path is in the index.html, the getElementById finds the element
-    // in the html-file. In this case the audio file, and then we play it :) @Erkki
-    playOuchSound: function() {
-        if (game.sounds.soundsOn) {
-            document.getElementById("audio/ouch.wav").play();
-        }
-    },
-    
     spawnEnemy: function() {
         var random = Math.random();
         var helper;
@@ -239,6 +243,40 @@ var game = { // a container for all relevant GAME information
             game.elements.enemies.push(helper); //clever, huh?
         }
     },
+    
+    calculateProjectileProperties: function() {
+        if (game.elements.projectiles.length === 0) { //if there are no projectiles
+            return; //do nothing
+        }
+        for (var i = 0; i < game.elements.projectiles.length; i++) { //for each projectile
+            var helper = game.elements.projectiles[i];
+            if (helper.location[0] < 0 || helper.location[0] > 1000 || helper.location[1] < 0 || helper.location[1] > 500) {
+                game.elements.projectiles.splice(i, 1); //if the projectile is off screen - remove it from the array
+            } else {
+                // Pythagoras all the way! Can't really put this in to words that easily
+                var changeX = helper.target[0] - helper.startLoc[0];
+                var changeY = helper.target[1] - helper.startLoc[1];
+                if (changeX === 0 && changeY === 0){
+                    //Do nothing
+                } else {
+                    var hypotenusa = Math.sqrt( changeX * changeX + changeY * changeY);
+                    helper.location[0] += changeX * helper.speed / hypotenusa; //move the projectile x
+                    helper.location[1] += changeY * helper.speed / hypotenusa; //move the projectile y
+                }
+                
+            }
+        }
+        game.checkIfHit();
+    },
+    
+    
+    
+    
+    /*
+      ####################
+      ## DRAW FUNCTIONS ##
+      ####################
+    */
     
     drawEnemy: function(index) {
         var helper = game.elements.enemies[index];
@@ -262,76 +300,19 @@ var game = { // a container for all relevant GAME information
         }
     },
     
-    calculateProjectileProperties: function() {
-        if (game.elements.projectiles.length === 0) { //if there are no projectiles
-            return; //do nothing
-        }
-        for (var i = 0; i < game.elements.projectiles.length; i++) { //for each projectile
-            var helper = game.elements.projectiles[i];
-            if (helper.location[0] < 0 || helper.location[0] > 1000 || helper.location[1] < 0 || helper.location[1] > 500) {
-                game.elements.projectiles.splice(i, 1); //if the projectile is off screen - remove it from the array
-            } else {
-                // Pythagoras all the way! Can't really put this in to words that easily
-                var changeX = helper.getTarget(0) - helper.getStartLoc(0);
-                var changeY = helper.getTarget(1) - helper.getStartLoc(1);
-                if (changeX === 0 && changeY === 0){
-                    //Do nothing
-                } else {
-                    var hypotenusa = Math.sqrt( changeX * changeX + changeY * changeY);
-                    helper.location[0] += changeX * helper.speed / hypotenusa; //move the projectile x
-                    helper.location[1] += changeY * helper.speed / hypotenusa; //move the projectile y
-                }
-                
-            }
-        }
-        game.checkIfHit();
-    },
     drawProjectile: function(index) {
         var helper = game.elements.projectiles[index];
         game.canvas.context.fillStyle = helper.rgb;
         game.canvas.context.fillRect(helper.location[0], helper.location[1], 2, 2);
     },
-    checkIfHit: function() {
-        for (var i = (game.elements.enemies.length - 1); i >= 0; i--) { //iterate from end of array to get "topmost" elements first
-            var enemyHelper = game.elements.enemies[i];
-            for (var a = 0; a < game.elements.projectiles.length; a++) { //for each projectile
-                var projectileHelper = game.elements.projectiles[a];
-                if (projectileHelper.location[1] > enemyHelper.y && projectileHelper.location[1] < enemyHelper.y + enemyHelper.enemyHeight 
-                && projectileHelper.location[0] > enemyHelper.x && projectileHelper.location[0] < enemyHelper.x + enemyHelper.enemyWidth) {
-                    enemyHelper.hitPoints--;
-                    game.elements.projectiles.splice(a, 1); //remove projectile if it hits something
-                    game.playOuchSound();
-                    continue;
-                }
-            }
-        }
-    },
     
-    load: function () {
-        if (typeof localStorage["playerLoot"] === "undefined" || typeof JSON.parse(localStorage.getItem("playerWeapon")).timer === "undefined") { //if the key "playerLoot" is undefined,
-            return;                                             //there is no local storage to load, so we return
-        } else {
-            game.player.loot = parseInt(localStorage.getItem("playerLoot")); //if there is load data, we update key values
-            game.player.weapon = JSON.parse(localStorage.getItem("playerWeapon"));
-            game.player.kills = JSON.parse(localStorage.getItem("playerKills"));
-            console.log("loaded"); //this was used for debugging
+    drawAllies: function() {
+        for (i = 0; i < game.elements.allies.length; i++) {
+            game.canvas.context.fillStyle = "#FE2EC8";
+            game.canvas.context.fillRect( game.elements.allies[i].x , game.elements.allies[i].y, 10, 10 );
         }
     },
-    save: function () {
-        if (game.saveHelper.timer < 1000) { //setInterval didn't work, so I made my own function
-            game.saveHelper.timer++; //if timer is less than 1000, we increment by one and exit the function
-            return;
-        } else {
-            game.saveHelper.timer = 0; //if it's 1000 (or more) we reset the timer to 0 and continue
-        }
-        localStorage.setItem("playerLoot", parseInt(game.player.loot)); //save the information
-        localStorage.setItem("playerWeapon", JSON.stringify(game.player.weapon));
-        localStorage.setItem("playerKills", JSON.stringify(game.player.kills));
-        console.log("saved"); //used for debugging
-    },
-    saveHelper: {
-        timer: 1000 //the first value we assign to the timer is 1000 so we immediately get a localStorage active.
-    },
+    /*
     drawAutosaveNotification: function () {
         if (game.saveHelper.timer < 120) {
             game.canvas.context.fillStyle = "#FFFFFF";
@@ -339,15 +320,54 @@ var game = { // a container for all relevant GAME information
             game.canvas.context.fillText("- GAME SAVED -", 450, 30);
         }
     },
-    reset: function () {
-        localStorage.clear(); //pretty self-explanatory
-        location.reload();
-    },
+    */
+    
+    
+    
     
     /*
-    Animation routines from http://incremental.barriereader.co.uk/one.html?v=15
+      ###############
+      ## GAME FLOW ##
+      ###############
     */
+    
+    /*
+    Animation routines and game loop from http://incremental.barriereader.co.uk/one.html?v=15
+    */
+    init: function() {
+        /*
+        Initialize the game
+        */
+        game.canvas = document.querySelector("canvas"); //assign canvas
+        game.canvas.context = game.canvas.getContext("2d"); //assign context
+        game.elements.enemies = []; //init array
+        game.elements.allies = [];
+        //var allyWeaponHelper = new game.Weapon("Paper planes", 1, 3, 2);
+        //var allyHelper = new game.Ally("Lasse", 1, 500, allyWeaponHelper, 200, 100);
+        //game.elements.allies.push(allyHelper);// @Erkki added ally "Lasse" and coordinates 200, 100
+        
+        game.player.weapon = new game.Weapon("Paper planes", 1, 3, 2); //give the player a starting weapon
+        game.canvas.addEventListener("click", game.readClick, false); //add the player interaction listener
+        game.load(); //check if there is data to load
+        game.save(); //this initializes the save keys
+        //game.date = new Date; //fps loop
+        game.gameLoop(); //initialize gameLoop
+    },
+    
+    gameLoop: function() { //the gameloop function
+        /* fps check
+        var thisLoop = new Date;
+        var fps = 1000 / (thisLoop - game.date);
+        console.log(fps);
+        game.date = thisLoop;
+        */
+        game.gameRunning = setTimeout(function() { 
+            requestAnimFrame(game.update, game.canvas); 
+        }, 10);
+    },
+    
     gameRunning: null, //this is a new variable so we can pause/stop the game
+    
     update: function() { //this is where our logic gets updated
     
         //this is where we update our table
@@ -358,13 +378,13 @@ var game = { // a container for all relevant GAME information
         stats.rows[1].cells[3].innerHTML = game.player.weapon.damage;
         stats.rows[1].cells[4].innerHTML = game.castle.hp;
         //table updated
-        game.save();
         game.spawnEnemy();
         game.updateAllyAI();
         game.calculateProjectileProperties();
         game.player.weapon.timer += ((game.player.weapon.rate * 1000) / 60); //cool down the player's weapon each tick
         game.draw(); //call the canvas draw function
     },
+    
     draw: function() { //this is where we will draw all the information for the game!
         game.canvas.context.clearRect(0, 0, 1000, 500); //clear the canvas
         for (var i = 0; i < game.elements.enemies.length; i++) {
@@ -381,7 +401,7 @@ var game = { // a container for all relevant GAME information
             }
         }
         game.drawAllies(); //Draw allies
-        game.drawAutosaveNotification();
+        //game.drawAutosaveNotification();
         game.canvas.context.fillStyle = "#DDDDDD"; //make the castle light grey
         game.canvas.context.fillRect(game.castle.leftEdge, 230, 150, 250); //draw the castle
         game.canvas.context.fillStyle = "#FFFF3C"; //make the player yellow
@@ -389,17 +409,85 @@ var game = { // a container for all relevant GAME information
         
         game.gameLoop(); //re-iterate back to gameloop
     },
-    gameLoop: function() { //the gameloop function
-        /* fps check
-        var thisLoop = new Date;
-        var fps = 1000 / (thisLoop - game.date);
-        console.log(fps);
-        game.date = thisLoop;
+    
+    
+    
+    
+    
+    /*
+      ########################
+      ## SAVING AND LOADING ##
+      ########################
+    */
+    
+    saveTimer: window.setInterval(function(){game.save()}, 1000*60),  //calls save every minute
+    
+    save: function () {
+        /*
+        localStorage.setItem("playerLoot", parseInt(game.player.loot)); //save the information
+        localStorage.setItem("playerWeapon", JSON.stringify(game.player.weapon));
+        localStorage.setItem("playerKills", JSON.stringify(game.player.kills));
         */
-        game.gameRunning = setTimeout(function() { 
-            requestAnimFrame(game.update, game.canvas); 
-        }, 10);
+        
+        game.saveState.settings = game.settings;
+        game.saveState.version = game.version;
+        game.saveState.player = game.player;
+        game.saveState.castle = game.castle;
+        game.saveState.allies = game.elements.allies;
+        localStorage.setItem("saveGame", JSON.stringify(game.saveState));
+        //console.log("saved"); //used for debugging
+    },
+    
+    load: function () {
+        if (typeof localStorage["saveGame"] === "undefined") {  //if there is no saveGame, we return
+            return;
+        } else {
+            /*
+            game.player.loot = parseInt(localStorage.getItem("playerLoot")); //if there is load data, we update key values
+            game.player.weapon = JSON.parse(localStorage.getItem("playerWeapon"));
+            game.player.kills = JSON.parse(localStorage.getItem("playerKills"));
+            */
+            game.saveState = JSON.parse(localStorage.getItem("saveGame"));
+            if (typeof game.saveState.version === "null" || game.saveState.version !== game.version) {
+                /*
+                If the version saved is null or the saved version isn't the same as
+                the current version - we wipe the save and return
+                */
+                localStorage.clear();
+                return;
+            }
+            //assign all loaded values
+            game.settings = game.saveState.settings;
+            game.player = game.saveState.player;
+            game.castle = game.saveState.castle;
+            game.elements.allies = game.saveState.allies;
+            //console.log("loaded"); //this was used for debugging
+        }
+    },
+    
+    reset: function () {
+        localStorage.clear(); //pretty self-explanatory
+        location.reload();
+    },
+    
+    
+    
+    
+    
+    /*
+      ##########
+      ## MISC ##
+      ##########
+    */
+    
+    // Play the audio file ouch.wav, path is in the index.html, the getElementById finds the element
+    // in the html-file. In this case the audio file, and then we play it :) @Erkki
+    playOuchSound: function() {
+        if (game.settings.sounds.soundsOn) {
+            document.getElementById("audio/ouch.wav").play();
+        }
     }
+    
 };
 
 /*
