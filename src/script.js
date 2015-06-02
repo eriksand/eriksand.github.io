@@ -521,6 +521,6 @@ initBackground function() {
     backgroundImage.onload = game.init();
     backgroundImage.src = "url('../img/background_small.png') no-repeat";
     document.getElementById("canvas").style.background = backgroundImage;
-}
+};
 
 
