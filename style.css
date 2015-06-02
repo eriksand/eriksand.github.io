@@ -22,7 +22,7 @@ canvas {
 #background {
     position: absolute;
     top: 50px;
-    right: 10px;
+    left: 10px;
 }
 
 td {
