@@ -65,13 +65,15 @@ var game = { // a container
         projectiles: []
     },
     
+    background: {
+        context: null
+    }
     canvas: {
         /*
         This is our "scene"
         */
         element: null,
-        context: null,
-        background: null
+        context: null
     },
     
     
@@ -332,7 +334,7 @@ var game = { // a container
         } else { // set default background
             var imago = new Image();
             imago.onload = function () {
-                game.canvas.background.drawImage(imago, 0, 0);
+                game.background.context.drawImage(imago, 0, 0);
                 alert ("loaded");
             }
             imago.src = "../img/background_small.png";
@@ -354,9 +356,10 @@ var game = { // a container
         /*
         Initialize the game
         */
+        game.background = document.querySelector("canvas"); //assign canvas to background
+        game.canvas.context = game.canvas.getContext("2d"); //assign context
+        game.setBackground();        
         game.canvas = document.querySelector("canvas"); //assign canvas
-        game.canvas.background = game.canvas.getContext("2d"); //assign background context
-        game.setBackground();
         game.canvas.context = game.canvas.getContext("2d"); //assign context
         game.elements.enemies = []; //init array
         game.elements.allies = [];
