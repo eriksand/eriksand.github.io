@@ -334,7 +334,7 @@ var game = { // a container
                 document.getElementById("canvas").style.background = imago;
                 alert ("loaded");
             }
-            imago.src = "url('../img/background_small.png')";
+            imago.src = "../img/background_small.png";
         }
     },
     
