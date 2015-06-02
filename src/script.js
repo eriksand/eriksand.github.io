@@ -65,9 +65,6 @@ var game = { // a container
         projectiles: []
     },
     
-    background: {
-        context: null
-    },
     canvas: {
         /*
         This is our "scene"
@@ -355,9 +352,6 @@ var game = { // a container
         /*
         Initialize the game
         */
-        game.background = document.getElementById("background"); //assign background-canvas to background
-        game.background.context = game.background.getContext("2d"); //assign context
-        game.setBackground();   
         game.canvas = document.querySelector("canvas"); //assign canvas
         game.canvas.context = game.canvas.getContext("2d"); //assign context
         game.elements.enemies = []; //init array
