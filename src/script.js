@@ -515,12 +515,4 @@ window.requestAnimFrame = (function(){
         };
 }());
 
-window.onload = initBackground();
-function initBackground () {
-    var backgroundImage = new Image();
-    backgroundImage.onload = game.init();
-    backgroundImage.src = "../img/background_small.png";
-    document.getElementById("canvas").style.background = backgroundImage;
-}
-
-
+window.onload = game.init();
