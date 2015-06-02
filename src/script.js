@@ -70,7 +70,8 @@ var game = { // a container
         This is our "scene"
         */
         element: null,
-        context: null
+        context: null,
+        background: null
     },
     
     
@@ -331,7 +332,7 @@ var game = { // a container
         } else { // set default background
             var imago = new Image();
             imago.onload = function () {
-                game.canvas.context.drawImage(imago, 0, 0);
+                game.canvas.background.drawImage(imago, 0, 0);
                 alert ("loaded");
             }
             imago.src = "../img/background_small.png";
@@ -354,8 +355,9 @@ var game = { // a container
         Initialize the game
         */
         game.canvas = document.querySelector("canvas"); //assign canvas
-        game.canvas.context = game.canvas.getContext("2d"); //assign context
+        game.canvas.background = game.canvas.getContext("2d"); //assign background context
         game.setBackground();
+        game.canvas.context = game.canvas.getContext("2d"); //assign context
         game.elements.enemies = []; //init array
         game.elements.allies = [];
         //var allyWeaponHelper = new game.Weapon("Paper planes", 1, 3, 2);
