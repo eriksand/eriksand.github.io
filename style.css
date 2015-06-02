@@ -18,9 +18,6 @@ canvas {
     background-image: url("img/background_small.png");
     */
     background-repeat: no-repeat;
-    position: absolute;
-    top: 50px;
-    left: 10px;
 }
 
 td {
