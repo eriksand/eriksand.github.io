@@ -338,8 +338,8 @@ var game = { // a container
         /*
         Initialize the game
         */
+        document.getElementById("canvas").style.color = "yellow";
         game.canvas = document.querySelector("canvas"); //assign canvas
-        game.canvas.style.color = "yellow";
         game.canvas.context = game.canvas.getContext("2d"); //assign context
         game.elements.enemies = []; //init array
         game.elements.allies = [];
