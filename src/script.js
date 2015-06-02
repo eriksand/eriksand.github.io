@@ -338,7 +338,7 @@ var game = { // a container
         /*
         Initialize the game
         */
-        document.getElementById("canvas").style.background = url("../img/background_small.png") "yellow" no-repeat; //background image
+        document.getElementById("canvas").style.background = url("../img/background_small.png") no-repeat; //background image
         game.canvas = document.querySelector("canvas"); //assign canvas
         game.canvas.context = game.canvas.getContext("2d"); //assign context
         game.elements.enemies = []; //init array
