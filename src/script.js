@@ -26,9 +26,11 @@ var game = { // a container
                 if (game.settings.sounds.soundsOn) { //if true
                     game.settings.sounds.soundsOn = 0; //set to false
                     helper[0].innerHTML = "Turn sounds on";
+                    game.setBackground("duck");
                 } else {
                     game.settings.sounds.soundsOn = 1; //set to true
                     helper[0].innerHTML = "Turn sounds off";
+                    game.setBackground(0);
                 }
             }
         }
