@@ -328,15 +328,13 @@ var game = { // a container
     */
     setBackground: function(backgroundId) {
         if (backgroundId === 0 || backgroundId === "day") { // set default background
-            document.getElementById("canvas").style.background = "url('../img/background_small.png') no-repeat";
+            document.getElementById("background").style.background = "url('../img/background_small.png') no-repeat";
         } else if (backgroundId === 1 || backgroundId === "duck") { //set the duck-background
-            document.getElementById("canvas").style.background = "url('../img/background_duck.png') no-repeat";
+            document.getElementById("background").style.background = "url('../img/background_duck.png') no-repeat";
         } else { // set default background
             var imago = new Image();
             imago.onload = function () {
                 game.background.context.drawImage(imago, 0, 0);
-                alert ("loaded");
-                game.gameLoop();
             }
             imago.src = "../img/background_small.png";
         }
@@ -357,8 +355,9 @@ var game = { // a container
         /*
         Initialize the game
         */
-        game.background = document.querySelector("canvas"); //assign canvas to background
+        game.background = document.querySelector("background"); //assign canvas to background
         game.background.context = game.background.getContext("2d"); //assign context
+        game.setBackground();   
         game.canvas = document.querySelector("canvas"); //assign canvas
         game.canvas.context = game.canvas.getContext("2d"); //assign context
         game.elements.enemies = []; //init array
@@ -372,8 +371,7 @@ var game = { // a container
         game.load(); //check if there is data to load
         game.save(); //this initializes the save keys
         //game.date = new Date; //fps loop
-        game.setBackground();   
-        //game.gameLoop(); //initialize gameLoop
+        game.gameLoop(); //initialize gameLoop
     },
     
     gameLoop: function() { //the gameloop function
