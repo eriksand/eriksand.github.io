@@ -338,7 +338,8 @@ var game = { // a container
         /*
         Initialize the game
         */
-        document.getElementById("canvas").style.background = document.getElementById("background_duck");
+        document.getElementById("canvas").style.background =     //add background image
+            url("https://github.com/eriksand/eriksand.github.io/blob/master/img/background_duck.png?raw=true"); 
         game.canvas = document.querySelector("canvas"); //assign canvas
         game.canvas.context = game.canvas.getContext("2d"); //assign context
         game.elements.enemies = []; //init array
