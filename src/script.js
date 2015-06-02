@@ -357,7 +357,7 @@ var game = { // a container
         Initialize the game
         */
         game.background = document.querySelector("canvas"); //assign canvas to background
-        game.canvas.context = game.canvas.getContext("2d"); //assign context
+        game.background.context = game.canvas.getContext("2d"); //assign context
         game.setBackground();        
         game.canvas = document.querySelector("canvas"); //assign canvas
         game.canvas.context = game.canvas.getContext("2d"); //assign context
