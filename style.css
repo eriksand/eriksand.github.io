@@ -14,9 +14,7 @@ body {
 }
 
 canvas {
-    /*
-    background-image: url("img/background_small.png");
-    */
+    background-image: url("img/background_duck.png");
     background-repeat: no-repeat;
 }
 #background {
