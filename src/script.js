@@ -330,7 +330,6 @@ var game = { // a container
             document.getElementById("canvas").style.background = "url('../img/background_duck.png') no-repeat";
         } else { // set default background
             document.getElementById("canvas").style.background = "url('../img/background_small.png') no-repeat";
-            }
         }
     },
     
