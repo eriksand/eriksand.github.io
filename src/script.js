@@ -322,6 +322,9 @@ var game = { // a container
     },
     */
     setBackground: function(bakgroundId) {
+        if (backgroundId === undefined) { // set default background
+            document.getElementById("canvas").style.background = "url('../img/background_small.png') no-repeat";
+        }
         if (backgroundId === 0 || backgroundId === "day") { // set default background
             document.getElementById("canvas").style.background = "url('../img/background_small.png') no-repeat";
         } else if (backgoundId === 1 || backgroundId === "duck") { //set the duck-background
