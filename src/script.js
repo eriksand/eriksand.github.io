@@ -67,7 +67,7 @@ var game = { // a container
     
     background: {
         context: null
-    }
+    },
     canvas: {
         /*
         This is our "scene"
