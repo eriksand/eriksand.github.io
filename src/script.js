@@ -331,7 +331,7 @@ var game = { // a container
         } else { // set default background
             var imago = new Image();
             imago.onload = function () {
-                document.getElementById("canvas").style.background = imago;
+                document.getElementById("canvas").style.backgroundImage = imago;
                 alert ("loaded");
             }
             imago.src = "../img/background_small.png";
