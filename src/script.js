@@ -336,6 +336,7 @@ var game = { // a container
             imago.onload = function () {
                 game.background.context.drawImage(imago, 0, 0);
                 alert ("loaded");
+                game.gameLoop();
             }
             imago.src = "../img/background_small.png";
         }
@@ -358,7 +359,6 @@ var game = { // a container
         */
         game.background = document.querySelector("canvas"); //assign canvas to background
         game.background.context = game.background.getContext("2d"); //assign context
-        game.setBackground();        
         game.canvas = document.querySelector("canvas"); //assign canvas
         game.canvas.context = game.canvas.getContext("2d"); //assign context
         game.elements.enemies = []; //init array
@@ -372,7 +372,8 @@ var game = { // a container
         game.load(); //check if there is data to load
         game.save(); //this initializes the save keys
         //game.date = new Date; //fps loop
-        game.gameLoop(); //initialize gameLoop
+        game.setBackground();   
+        //game.gameLoop(); //initialize gameLoop
     },
     
     gameLoop: function() { //the gameloop function
