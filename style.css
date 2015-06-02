@@ -14,7 +14,9 @@ body {
 }
 
 canvas {
+    /*
     background-image: url("img/background_small.png");
+    */
     background-repeat: no-repeat;
 }
 
