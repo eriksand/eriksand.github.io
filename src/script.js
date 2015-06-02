@@ -321,7 +321,15 @@ var game = { // a container
         }
     },
     */
-    
+    setBackground: function(bakgroundId) {
+        if (backgroundId === 0 || backgroundId === "day") { // set default background
+            document.getElementById("canvas").style.background = "url('../img/background_small.png') no-repeat";
+        } else if (backgoundId === 1 || backgroundId === "duck") { //set the duck-background
+            document.getElementById("canvas").style.background = "url('../img/background_duck.png') no-repeat";
+        } else { // set default background
+            document.getElementById("canvas").style.background = "url('../img/background_small.png') no-repeat";
+        }
+    },
     
     
     
@@ -338,7 +346,7 @@ var game = { // a container
         /*
         Initialize the game
         */
-        document.getElementById("canvas").style.background = "url('../img/background_duck.png') no-repeat"; //background image
+        setBackground();
         game.canvas = document.querySelector("canvas"); //assign canvas
         game.canvas.context = game.canvas.getContext("2d"); //assign context
         game.elements.enemies = []; //init array
