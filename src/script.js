@@ -519,7 +519,7 @@ window.onload = initBackground();
 function initBackground () {
     var backgroundImage = new Image();
     backgroundImage.onload = game.init();
-    backgroundImage.src = "url('../img/background_small.png') no-repeat";
+    backgroundImage.src = "../img/background_small.png";
     document.getElementById("canvas").style.background = backgroundImage;
 }
 
