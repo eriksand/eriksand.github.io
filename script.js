@@ -27,5 +27,5 @@ window.onload = function() {
       }
   ]
 
-}
+};
 
