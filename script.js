@@ -4,8 +4,6 @@ window.onload = function() {
   ctx.fillStyle = "#FF0000";
   ctx.fillRect(0,0,150,75);
   
-  var myPieChart = new Chart(canvas).Pie(data);
-
   var data = [
       {
           value: 300,
@@ -26,6 +24,10 @@ window.onload = function() {
           label: "Yellow"
       }
   ]
+  
+  var myPieChart = new Chart(canvas).Pie(data);
+
+  
 
 };
 
