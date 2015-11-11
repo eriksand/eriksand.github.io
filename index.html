@@ -17,7 +17,7 @@
             var ctx = canvas.getContext("2d");
             ctx.fillStyle = "#FF0000";
             ctx.fillRect(0,0,150,75);
-            new Chart(ctx).PolarArea(data, options);
+            var myBarChart = new Chart(ctx).Bar(data, options);
             
             var data = {
                 labels: ["January", "February", "March", "April", "May", "June", "July"],
