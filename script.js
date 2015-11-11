@@ -23,5 +23,6 @@ var data = [
 
 ];
 
-new Chart(ctx).Doughnut(data);
+// For a pie chart
+var myPieChart = new Chart(ctx[0]).Pie(data);
 
