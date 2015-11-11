@@ -4,7 +4,7 @@ window.onload = function() {
   ctx.fillStyle = "#FF0000";
   ctx.fillRect(0,0,150,75);
   
-  var myPieChart = new Chart(ctx[0]).Pie(data);
+  var myPieChart = new Chart(canvas).Pie(data);
 
   var data = [
       {
