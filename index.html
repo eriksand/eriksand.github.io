@@ -11,7 +11,13 @@
         
         <p>hello world</p>
         
-        <canvas id="myChart" width="400" height="400"></canvas>
+        
          
     </body>
+    <canvas id="myChart" width="400" height="400"></canvas>
+    <script>
+        var canvas = document.getElementById("myChart");
+        var ctx = canvas.getContext("2d");
+        new Chart(ctx).Line(data, options);
+    </script>
 </html>
