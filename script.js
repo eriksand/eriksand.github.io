@@ -8,31 +8,31 @@ window.onload = function() {
       {
           value: 12,
           color:"#700f0f",
-          highlight: "#e3e3e3",
+          highlight: "#d2bca1",
           label: "Studera"
       },
       {
           value: 6,
           color:"#ffd07f",
-          highlight: "#e3e3e3",
+          highlight: "#d2bca1",
           label: "Sova"
       },
       {
           value: 4,
           color: "#8e8e5b",
-          highlight: "#e3e3e3",
+          highlight: "#d2bca1",
           label: "Arbeta"
       },
       {
           value: 1,
           color: "#ae5656",
-          highlight: "#e3e3e3",
+          highlight: "#d2bca1",
           label: "Äta"
       },
       {
           value: 1,
           color: "#a2650e",
-          highlight: "#e3e3e3",
+          highlight: "#d2bca1",
           label: "Fritid"
       }
   ]
