@@ -6,22 +6,34 @@ window.onload = function() {
   
   var data = [
       {
-          value: 300,
-          color:"#F7464A",
+          value: 12,
+          color:"#700f0f",
           highlight: "#FF5A5E",
-          label: "Red"
+          label: "Studera"
       },
       {
-          value: 50,
-          color: "#46BFBD",
+          value: 6,
+          color:"#ffd07f",
+          highlight: "#FF5A5E",
+          label: "Sova"
+      },
+      {
+          value: 4,
+          color: "#8e8e5b",
           highlight: "#5AD3D1",
-          label: "Green"
+          label: "Arbeta"
       },
       {
-          value: 100,
-          color: "#FDB45C",
+          value: 1,
+          color: "#ae5656",
+          highlight: "#5AD3D1",
+          label: "Äta"
+      },
+      {
+          value: 1,
+          color: "#a2650e",
           highlight: "#FFC870",
-          label: "Yellow"
+          label: "Fritid"
       }
   ]
   
