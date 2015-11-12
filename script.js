@@ -25,7 +25,7 @@ window.onload = function() {
       }
   ]
   
-  var myPieChart = new Chart(canvas).Pie(data);
+  var myPieChart = new Chart(ctx).Pie(data);
 
   
 
